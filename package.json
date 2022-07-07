@@ -1,7 +1,7 @@
 {
   "name": "react-around-auth",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "homepage": "https://SoniaNeimark.github.io/react-around-auth",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
