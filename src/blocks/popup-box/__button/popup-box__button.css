@@ -1,0 +1,33 @@
+.popup-box__button {
+  width: 238px;
+  height: 46px;
+  font-size: 14px;
+  line-height: 1.25;
+  margin: 31px auto 25px auto;
+  border-radius: 2px;
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
+  cursor: default;
+  box-sizing: border-box;
+
+  background-color: rgba(0, 0, 0, 1);
+  border: 1px solid rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
+  transition: background-color 1s linear;
+}
+
+@media screen and (min-width: 1024px) {
+  .popup-box__button {
+    width: 358px;
+    height: 50.15px;
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 36px;
+  }
+}
+
+.popup-box__button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}

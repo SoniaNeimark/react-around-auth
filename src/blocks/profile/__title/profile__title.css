@@ -1,0 +1,19 @@
+.profile__title {
+  max-width: calc(100% - 19px * 2);
+  display: grid;
+  grid-template-columns: auto max-content;
+  grid-template-rows: max-content;
+  grid-template-areas:
+  "profile__name edit-button";
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 1024px) {
+  .profile__title {
+    max-width: 100%;
+    align-self: flex-start;
+  }
+
+}

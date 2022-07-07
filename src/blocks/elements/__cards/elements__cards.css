@@ -1,0 +1,24 @@
+.elements__cards {
+  list-style: none;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+@media screen and (min-width: 624px) {
+  .elements__cards {
+    width: 584px;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .elements__cards {
+    min-width: 880px;
+  }
+}

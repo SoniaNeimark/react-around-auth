@@ -1,0 +1,5 @@
+.close-button_place_image {
+  z-index: 1;
+  transform: translate(100%, 0) rotate(45deg);
+  justify-self: flex-end;
+}

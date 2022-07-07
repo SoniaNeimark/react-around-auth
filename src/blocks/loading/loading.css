@@ -1,0 +1,9 @@
+.loading {
+	font-family: "Inter", Arial, Helvetica, sans-serif;
+	font-size: 40px;
+	font-weight: 400;
+	margin-top: 50vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}

@@ -1,0 +1,10 @@
+.popup-box__error {
+  width: 100%;
+  visibility: hidden;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+  border: none;
+  padding-top: 5px;
+  margin: 0;
+}

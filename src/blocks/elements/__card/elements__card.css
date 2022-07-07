@@ -1,0 +1,44 @@
+.elements__card {
+  position: relative;
+  width: 282px;
+  height: 367px;
+  margin: 0 auto 20px auto;
+  display: grid;
+  grid-template-columns: auto 39px;
+  grid-template-rows: max-content auto;
+  grid-template-areas:
+  "elements__image elements__image"
+  "elements__title elements__like-group";
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 624px) and (max-width: 1023px) {
+  .elements__card {
+    margin-right: 20px;
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  .elements__card:nth-of-type(2n) {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .elements__card {
+    margin-left: 0;
+    margin-right: 17px;
+  }
+  .elements__card:nth-of-type(3n) {
+    margin-right: 0;
+  }
+
+}
+
+@media screen and (max-width: 320px) {
+  .elements__card {
+    max-width: 100%;
+  }
+}

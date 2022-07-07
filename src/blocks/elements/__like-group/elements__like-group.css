@@ -1,0 +1,10 @@
+.elements__like-group {
+  max-height: 35px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  padding-bottom: 23px;
+  justify-self: flex-start;
+  align-self: flex-end;
+  grid-area: elements__like-group;
+}

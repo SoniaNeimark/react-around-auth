@@ -1,0 +1,14 @@
+.elements__image-wrapper {
+  display: flex;
+  object-fit: cover;
+  width: 282px;
+  height: 282px;
+  grid-area: elements__image;
+  grid-column: 1 / span 2;
+}
+
+@media screen and (max-width: 320px) {
+  .elements__image-wrapper {
+    width: 100%;
+  }
+}
