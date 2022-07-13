@@ -2,11 +2,11 @@ import { useState, useContext } from "react";
 import Form from "../basic/form/Form";
 import FormInput from "../basic/input/FormInput";
 import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
-import { authorize } from "../../utils/auth";
+import * as auth from "../../utils/auth.js";
 import { withRouter, useHistory } from "react-router-dom";
 
 function Login(props) {
-  const history = useHistory();
+  //const history = useHistory();
   const currentProps = useContext(CurrentPropsContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,16 +24,16 @@ function Login(props) {
     if (!email || !password) {
       return;
     }
-    authorize(email, password)
+    auth.authorize(email, password)
       .then((data) => {
-        if (data.jwt) {
+        if (data.token) {
           setEmail("");
           setPassword("");
-          currentProps.handleLogin();
-          history.push(currentProps.main);
+          currentProps.setLoggedIn(true);
+          currentProps.history.push("/gallery");
         }
       })
-      .catch((err) => console.log(err)); // this is fired if the user not found
+      .catch((err) => console.log(err.message)); // this is fired if the user not found
   }
 
   return (
@@ -72,4 +72,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default withRouter(Login)

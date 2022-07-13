@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import api from "../utils/api";
+import * as auth from "../utils/auth"
 import {
   CurrentUserContext,
   getCurrentUser,
@@ -24,6 +25,8 @@ import paths from "../utils/paths";
 function App() {
   const history = useHistory();
   const [currentUser, setCurrentUser] = useState(null);
+  const [userToken, setUserToken] = useState({ token: localStorage.getItem("token") })
+  const [userMail, setUserMail] = useState("")
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [headerText, setHeaderText] = useState({});
@@ -33,6 +36,8 @@ function App() {
   const [buttonText, setButtonText] = useState("Save");
   const [buttonOff, setButtonOff] = useState(true);
   const currentProps = {
+    userMail,
+    userToken,
     handleLogin,
     history,
     loggedIn,
@@ -76,6 +81,28 @@ function App() {
         : { name: "", link: "Sign Up" }
     );
   }, [currentUser, loggedIn]);
+
+  useEffect(() => {
+    return function tokenCheck() {
+      // if the user has a token in localStorage,
+      // this function will check that the user has a valid token
+      const token = localStorage.getItem('token');
+      if (token) {
+        // we'll verify the token
+        auth.getContent(token).then((res) => {
+          if (res) {
+            // we can get the user data here!
+                        // let's put it in the state inside App.js
+            setLoggedIn(true)
+            setUserMail(res.data.email)
+            history.push(paths.main);
+            console.log(res.data.email)
+
+          }
+        });
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (isAlert) {
@@ -134,6 +161,7 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard({ ...card });
     setIsOpen(true);
+    console.log(userToken)
   }
 
   function handleAlertPopupOpen(card) {

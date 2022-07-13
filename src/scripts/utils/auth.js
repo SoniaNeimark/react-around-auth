@@ -4,45 +4,55 @@ export const register = (password, email) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ password: password, email: email }),
   })
     .then((response) => {
-      try {
-        if (response.status === 201) {
-          console.log(response)
-          return response.json();
-        }
-      } catch (e) {
-        return e;
+      if (response.status === 201) {
+        return response.json();
       }
     })
-    .catch((error) => {
-      console.log(error);
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
 // auth.js
 
-export const authorize = (identifier, password) => {
+export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ identifier: identifier, password: password }),
+    body: JSON.stringify({ email: email, password: password }),
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      if (data.jwt) {
-        console.log(data.jwt)
-        localStorage.setItem("jwt", data.jwt);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
         return data;
-      } else {
-        console.log(data);
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message));
+};
+
+export const getContent = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => data);
 };

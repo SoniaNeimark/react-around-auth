@@ -2,8 +2,8 @@ import { useState, useContext } from "react";
 import Form from "../basic/form/Form";
 import FormInput from "../basic/input/FormInput";
 import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
-import * as auth from "../../utils/auth";
-import { withRouter, useHistory } from "react-router-dom";
+import * as auth from "../../utils/auth.js";
+import { withRouter } from "react-router-dom";
 
 function Register(props) {
   const currentProps = useContext(CurrentPropsContext);
@@ -11,7 +11,7 @@ function Register(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const history = useHistory();
+  //const history = useHistory();
 
   /*React.useEffect(() => {
     email.current.value = "";
@@ -23,7 +23,7 @@ function Register(props) {
     auth.register(password, email).then((res) => {
       if (res) {
         setMessage("");
-        history.push(currentProps.login);
+        currentProps.history.push(currentProps.login);
       } else {
         setMessage("Something went wrong!");
       }
@@ -71,4 +71,4 @@ function Register(props) {
   );
 }
 
-export default Register;
+export default withRouter(Register);

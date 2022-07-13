@@ -6,17 +6,20 @@ function Header(props) {
   const location = useLocation();
   const currentProps = React.useContext(CurrentPropsContext);
   function handleClicK() {
-    currentProps.headerText.link =
-      location.pathname === currentProps.login ? "Log in" : "Sign up";
+    currentProps.headerText.link = location.pathname === currentProps.login
+    ? "Log in"
+    : "Sign up";
     currentProps.resetForm();
     currentProps.setLoggedIn(false)
+    localStorage.removeItem('token');
+    currentProps.history.push('/login');
   }
 
   return (
     <header className="header">
       <div className="logo" id="logo"></div>
       <div className="header__text">
-      <p className="header__link header__user">{currentProps.headerText.name}</p>
+      <p className="header__link header__link_user">{currentProps.userMail}</p>
       <Link
         to={
           currentProps.loggedIn
