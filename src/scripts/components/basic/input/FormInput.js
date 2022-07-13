@@ -1,5 +1,5 @@
 import React from "react";
-import { CurrentPropsContext } from "../contexts/CurrentPropsContext";
+import { CurrentPropsContext } from "../../../contexts/CurrentPropsContext";
 import Input from "./Input";
 
 function FormInput(props) {
@@ -10,7 +10,9 @@ function FormInput(props) {
   return (
     <>
       <Input
-        className={`popup-box__input${
+        className={!props.login ? `popup-box__input${
+          error ? " popup-box__input_type_error" : ""
+        }` : `popup-box__input popup-box__input_dark${
           error ? " popup-box__input_type_error" : ""
         }`}
         type={props.type}
@@ -25,7 +27,7 @@ function FormInput(props) {
         ref={propsRef}
       />
       <p
-        className={`popup-box__error${
+        className={`popup-box__error ${
           error ? " popup-box__error_visible" : ""
         }`}
       >

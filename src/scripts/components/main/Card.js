@@ -1,5 +1,6 @@
 import React from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { Link } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Card(props) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -10,23 +11,17 @@ function Card(props) {
     return owner._id === currentUser._id;
   }
 
-  function handleImageClick(evt) {
-    props.onClick(evt);
-  }
-
-  function handleCardDelete() {
-    props.onCardDelete();
-  }
-
   return (
     <li className="elements__card">
       <div className="elements__image-wrapper">
+        <Link to={props.imageLink}>
         <img
           className="elements__image hover-opacity open-popup"
-          onClick={handleImageClick}
+          onClick={props.onCardClick}
           src={props.src}
           alt={props.title}
         />
+        </Link>
       </div>
       <h2 className="elements__title">{props.title}</h2>
       <div className="elements__like-group">
@@ -39,15 +34,15 @@ function Card(props) {
         ></button>
         <p className="elements__like-number">{props.likes.length}</p>
       </div>
+      <Link to={props.alertLink}>
       <button
         className={`delete-button hover-opacity${
           isOwn ? " delete-button_visible" : ""
         }`}
         type="button"
-        onClick={(evt) => {
-          handleCardDelete(evt);
-        }}
+        onClick={props.onCardDelete}
       ></button>
+      </Link>
     </li>
   );
 }

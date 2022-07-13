@@ -1,0 +1,5 @@
+.authentication__bottom-group {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}

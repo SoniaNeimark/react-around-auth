@@ -1,17 +1,15 @@
 import React from "react";
-import Card from "./Card.js";
-import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { Link } from "react-router-dom";
+import Card from "./Card";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
+  const currentProps = React.useContext(CurrentPropsContext);
 
-  function handleImageClick(evt) {
-    props.setIsImagePopupOpen(evt);
-  }
-
-  function handleCardDelete(card) {
-    props.setSelectedCard(card);
-    props.setIsAlertPopupOpen();
+  function handleClick() {
+    currentProps.setIsOpen(true);
   }
 
   return (
@@ -25,29 +23,35 @@ function Main(props) {
           }}
         ></div>
         <div className="profile__avatar-edit">
-          <button
-            className="avatar-edit-button hover-opacity open-popup"
-            type="button"
-            onClick={() => props.setIsEditAvatarPopupOpen()}
-          ></button>
+          <Link to={currentProps.avatar}>
+            <button
+              className="avatar-edit-button hover-opacity open-popup"
+              type="button"
+              onClick={handleClick}
+            ></button>
+          </Link>
         </div>
         <div className="profile__info">
           <div className="profile__title">
             <h1 className="profile__name">{currentUser.name}</h1>
-            <button
-              className="edit-button hover-opacity open-popup"
-              type="button"
-              onClick={() => props.setIsEditProfilePopupOpen()}
-            ></button>
+            <Link to={currentProps.profile}>
+              <button
+                className="edit-button hover-opacity open-popup"
+                type="button"
+                onClick={handleClick}
+              ></button>
+            </Link>
           </div>
           <p className="profile__profession">{currentUser.about}</p>
         </div>
         <div className="profile__add-button-wrapper">
-          <button
-            className="profile__add-button hover-opacity open-popup"
-            type="button"
-            onClick={() => props.setIsAddPlacePopupOpen()}
-          ></button>
+          <Link to={currentProps.create}>
+            <button
+              className="profile__add-button hover-opacity open-popup"
+              type="button"
+              onClick={handleClick}
+            ></button>
+          </Link>
         </div>
       </section>
 
@@ -60,16 +64,16 @@ function Main(props) {
               src={card.link}
               title={card.name}
               likes={card.likes}
-              onClick={handleImageClick}
               owner={card.owner}
+              onCardClick={() => props.handleCardClick(card)}
               onCardLike={() => {
                 props.onCardLike(card);
               }}
               onCardDelete={() => {
-                handleCardDelete(card);
+                props.handleAlertPopupOpen(card);
               }}
-              openCardImage={props.openCardImage}
-              setCardIndex={props.setCardIndex}
+              imageLink={`${currentProps.main}/${card._id}`}
+              alertLink={currentProps.delete}
             />
           ))}
         </ul>

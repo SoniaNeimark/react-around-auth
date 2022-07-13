@@ -1,0 +1,10 @@
+.authentication__link {
+  text-decoration: none;
+  color: white;
+  padding-top: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+}

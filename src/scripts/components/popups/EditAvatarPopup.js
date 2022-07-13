@@ -1,13 +1,15 @@
 import React from "react";
-import PopupWithForm from "./PopupWithForm.js";
-import FormInput from "./FormInput.js";
+import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
+import PopupWithForm from "../basic/popup/PopupWithForm";
+import FormInput from "../basic/input/FormInput";
 
 function EditAvatarPopup(props) {
+  const currentProps = React.useContext(CurrentPropsContext);
   const avatar = React.useRef("");
 
   React.useEffect(() => {
     avatar.current.value = "";
-  }, [props.isOpen]);
+  }, [currentProps.isOpen]);
 
   function handleSubmit() {
     props.onUpdateAvatar(avatar.current.value);
@@ -15,7 +17,6 @@ function EditAvatarPopup(props) {
 
   return (
     <PopupWithForm
-      isOpen={props.isOpen}
       onSubmit={handleSubmit}
       name="avatar"
       title="Change profile picture"
@@ -25,7 +26,7 @@ function EditAvatarPopup(props) {
         name="avatarurl"
         placeholder="Image link"
         propsRef={avatar}
-        isOpen={props.isOpen}
+        onChange={(evt) => console.log(evt.target.value)}
       />
     </PopupWithForm>
   );

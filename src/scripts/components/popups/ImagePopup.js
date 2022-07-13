@@ -1,18 +1,18 @@
-import React from "react";
-import { CurrentPropsContext } from "../contexts/CurrentPropsContext";
+import { useContext } from "react";
+import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 
 function ImagePopup(props) {
-  const currentProps = React.useContext(CurrentPropsContext);
+  const currentProps = useContext(CurrentPropsContext);
 
   return (
     <div
       className={`popup-box popup-box_image popup-box_no-form${
-        props.isOpen ? " popup-box_opened" : ""
+        currentProps.isOpen ? " popup-box_opened" : ""
       }`}
       id="image"
       onClick={(evt) => {
         if (evt.currentTarget === evt.target) {
-          currentProps.onClose();
+          currentProps.handleClosePopups();
         }
       }}
     >
@@ -20,7 +20,7 @@ function ImagePopup(props) {
         <button
           className="close-button hover-opacity close-button_place_image"
           type="button"
-          onClick={() => currentProps.onClose()}
+          onClick={() => currentProps.handleClosePopups()}
         ></button>
         <img className="popup-box__image" src={props.src} alt={props.alt} />
         <p className="popup-box__subtitle">{props.alt}</p>

@@ -1,0 +1,8 @@
+.popup-box__heading_login {
+  width: auto;
+  margin: auto;
+  display: flex;
+  flex-flow: row;
+  justify-items: center;
+  justify-content: center;
+}

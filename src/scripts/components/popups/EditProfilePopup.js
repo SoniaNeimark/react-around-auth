@@ -1,17 +1,19 @@
-import React from "react";
-import PopupWithForm from "./PopupWithForm.js";
-import FormInput from "./FormInput.js";
-import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { useContext, useState, useEffect } from "react";
+import PopupWithForm from "../basic/popup/PopupWithForm";
+import FormInput from "../basic/input/FormInput";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentPropsContext } from "../../contexts/CurrentPropsContext"
 
 function EditProfilePopup(props) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const currentUser = useContext(CurrentUserContext);
+  const currentProps = useContext(CurrentPropsContext)
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser, props.isOpen]);
+  }, [currentUser, currentProps.isOpen]);
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -27,14 +29,12 @@ function EditProfilePopup(props) {
 
   return (
     <PopupWithForm
-      isOpen={props.isOpen}
       onSubmit={handleSubmit}
       name="profile"
       title="Edit profile"
     >
       <FormInput
         value={name}
-        setInputValue={setName}
         onChange={handleNameChange}
         type="text"
         name="name"
