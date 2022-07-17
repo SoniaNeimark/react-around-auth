@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-around-auth/static/css/main.93aff23a.css",
-    "main.js": "/react-around-auth/static/js/main.a8282956.js",
+    "main.css": "/react-around-auth/static/css/main.2387a963.css",
+    "main.js": "/react-around-auth/static/js/main.39b587fe.js",
     "static/js/787.b0e40ee8.chunk.js": "/react-around-auth/static/js/787.b0e40ee8.chunk.js",
     "static/media/Inter-Black.woff": "/react-around-auth/static/media/Inter-Black.c6938660eec019fefd68.woff",
     "static/media/Inter-Regular.woff": "/react-around-auth/static/media/Inter-Regular.8c206db99195777c6769.woff",
@@ -12,15 +12,17 @@
     "static/media/like.svg": "/react-around-auth/static/media/like.3826c074a1b94b101e38.svg",
     "index.html": "/react-around-auth/index.html",
     "static/media/trash.svg": "/react-around-auth/static/media/trash.8cb59aa98088a1653f62.svg",
+    "static/media/fail.svg": "/react-around-auth/static/media/fail.df8eddf661ff88f2d0ef.svg",
+    "static/media/success.svg": "/react-around-auth/static/media/success.1b6082f862eac35e2514.svg",
     "static/media/like_active.svg": "/react-around-auth/static/media/like_active.226461bd64622361ffb2.svg",
     "static/media/edit.svg": "/react-around-auth/static/media/edit.8667ac4a523e8fc42e59.svg",
     "static/media/add_close.svg": "/react-around-auth/static/media/add_close.d86bb2edc2f6eadb96b7.svg",
-    "main.93aff23a.css.map": "/react-around-auth/static/css/main.93aff23a.css.map",
-    "main.a8282956.js.map": "/react-around-auth/static/js/main.a8282956.js.map",
+    "main.2387a963.css.map": "/react-around-auth/static/css/main.2387a963.css.map",
+    "main.39b587fe.js.map": "/react-around-auth/static/js/main.39b587fe.js.map",
     "787.b0e40ee8.chunk.js.map": "/react-around-auth/static/js/787.b0e40ee8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.93aff23a.css",
-    "static/js/main.a8282956.js"
+    "static/css/main.2387a963.css",
+    "static/js/main.39b587fe.js"
   ]
 }
