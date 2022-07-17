@@ -1,7 +1,0 @@
-.alert {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  max-width: 430px;
-  max-height: 330px;
-}

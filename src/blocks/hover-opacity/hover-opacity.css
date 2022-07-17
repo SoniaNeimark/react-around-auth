@@ -1,9 +1,0 @@
-.hover-opacity {
-  cursor: pointer;
-  opacity: 1;
-  transition: opacity .8s linear;
-}
-
-.hover-opacity:hover {
-  opacity: 0.6;
-}
