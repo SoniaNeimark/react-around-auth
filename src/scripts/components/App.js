@@ -1,4 +1,4 @@
-import React , { useContext, useState, useEffect } from "react";
+import React , { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import api from "../utils/api";
 import * as auth from "../utils/auth";
@@ -66,7 +66,7 @@ function App() {
           .catch(err => console.log(err));
       }
     };
-  }, []);
+  }, [currentProps.history, currentProps.loggedIn, currentProps.setUserMail]);
 
   useEffect(() => {
     if (currentProps.isValid) {
