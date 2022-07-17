@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 
 function Main(props) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const currentProps = React.useContext(CurrentPropsContext);
+  const currentUser = useContext(CurrentUserContext);
+  const currentProps = useContext(CurrentPropsContext);
 
   function handleClick() {
     currentProps.setIsOpen(true);
@@ -19,7 +19,7 @@ function Main(props) {
           className="profile__image"
           id="profile"
           style={{
-            backgroundImage: `url(${currentUser.avatar})`,
+            backgroundImage: `url(${currentUser.avatar})`
           }}
         ></div>
         <div className="profile__avatar-edit">
@@ -57,7 +57,7 @@ function Main(props) {
 
       <section className="elements">
         <ul className="elements__cards" id="cards">
-          {props.cards.map((card) => (
+          {props.cards.map(card => (
             <Card
               key={card._id}
               id={card._id}

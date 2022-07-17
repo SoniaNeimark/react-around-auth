@@ -1,5 +1,6 @@
 .close-button {
     width: 26px;
+    align-self:flex-end;
     height: 26px;
     transform: translate(50%, calc(-100% - 13px)) rotate(45deg);
     cursor: pointer;
@@ -16,6 +17,6 @@
     .close-button {
       width: 40px;
       height: 40px;
-      transform: translate(calc(100% + 36px), -100%) rotate(45deg);
+      transform: translate(100%, -100%) rotate(45deg);
     }
   }

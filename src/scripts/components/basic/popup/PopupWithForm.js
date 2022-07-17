@@ -1,33 +1,25 @@
 import React from "react";
-import Form from "../form/Form"
-import { CurrentPropsContext } from "../../../contexts/CurrentPropsContext";
+import PopupBox from "./PopupBox";
+import Form from "../form/Form";
 
 function PopupWithForm(props) {
-  const currentProps = React.useContext(CurrentPropsContext);
-
-  function onClickOutside(e) {
-    e.currentTarget === e.target && currentProps.handleClosePopups();
-  }
-
   return (
-    <div
-      className={`popup-box popup-box_${props.name}${
-        currentProps.isOpen ? " popup-box_opened" : ""
-      }`}
-      id={`${props.name}popup`}
-      onClick={onClickOutside}
+    <PopupBox
+      name={props.name}
+      loginAlert={props.loginAlert}
+      handleClick={props.handleClick}
     >
-      <div className="popup-box__container">
-        <Form
-          name={props.name}
-          title={props.title}
-          login={false}
-          children={props.children}
-          onSubmit={props.onSubmit}
-          buttonText={props.buttonText}
-        />
-      </div>
-    </div>
+      <Form
+        name={props.name}
+        title={props.title}
+        login={false}
+        children={props.children}
+        onSubmit={props.onSubmit}
+        buttonText={props.buttonText}
+        loginAlert={props.loginAlert}
+        create={props.create}
+      />
+    </PopupBox>
   );
 }
 

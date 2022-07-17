@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import { Route, Switch, Redirect, useHistory } from "react-router-dom";
+import React , { useContext, useState, useEffect } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 import api from "../utils/api";
-import * as auth from "../utils/auth"
+import * as auth from "../utils/auth";
 import {
   CurrentUserContext,
-  getCurrentUser,
+  getCurrentUser
 } from "../contexts/CurrentUserContext";
 import { CurrentPropsContext } from "../contexts/CurrentPropsContext";
+import { useCurrentProps } from "../hooks/useCurrentProps";
 import Header from "./main/Header";
 import Main from "./main/Main";
 import Footer from "./main/Footer";
@@ -18,124 +19,80 @@ import AlertPopup from "./popups/AlertPopup";
 import Loading from "./Loading";
 import Login from "./authorisation/Login";
 import Register from "./authorisation/Register";
+import InfoTooltip from "./popups/InfoTooltip";
 import ProtectedRoute from "./protected/ProtectedRoute";
-import { useFormAndValidation } from "../hooks/useFormAndValidation";
 import paths from "../utils/paths";
 
 function App() {
-  const history = useHistory();
   const [currentUser, setCurrentUser] = useState(null);
-  const [userToken, setUserToken] = useState({ token: localStorage.getItem("token") })
-  const [userMail, setUserMail] = useState("")
   const [cards, setCards] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [headerText, setHeaderText] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAlert, setIsAlert] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({});
-  const [buttonText, setButtonText] = useState("Save");
-  const [buttonOff, setButtonOff] = useState(true);
   const currentProps = {
-    userMail,
-    userToken,
-    handleLogin,
-    history,
-    loggedIn,
-    setLoggedIn,
-    setHeaderText,
-    headerText,
-    isAlert,
-    isOpen,
-    setIsOpen,
-    selectedCard,
-    handleClosePopups,
-    buttonText,
-    setButtonText,
-    buttonOff,
-    ...useFormAndValidation(),
-    ...paths,
+    ...useCurrentProps(),
+    ...paths
   };
 
   useEffect(() => {
     api
       .getUserData()
-      .then((data) => {
+      .then(data => {
         setCurrentUser(getCurrentUser(data));
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }, []);
 
   useEffect(() => {
     api
       .getInitialCards()
-      .then((data) => {
+      .then(data => {
         setCards(data);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }, []);
 
   useEffect(() => {
-    setHeaderText(
-      loggedIn
-        ? { name: currentUser ? currentUser.name : "", link: "Log out" }
-        : { name: "", link: "Sign Up" }
-    );
-  }, [currentUser, loggedIn]);
-
-  useEffect(() => {
-    return function tokenCheck() {
-      // if the user has a token in localStorage,
-      // this function will check that the user has a valid token
-      const token = localStorage.getItem('token');
+    return function() {
+      const token = localStorage.getItem("token");
       if (token) {
-        // we'll verify the token
-        auth.getContent(token).then((res) => {
-          if (res) {
-            // we can get the user data here!
-                        // let's put it in the state inside App.js
-            setLoggedIn(true)
-            setUserMail(res.data.email)
-            history.push(paths.main);
-            console.log(res.data.email)
-
-          }
-        });
+        auth
+          .getContent(token)
+          .then(res => {
+            if (res) {
+              currentProps.setLoggedIn(true);
+              currentProps.setUserMail(res.data.email);
+              currentProps.history.push(paths.main);
+            }
+            return;
+          })
+          .catch(err => console.log(err));
       }
-    }
-  }, [])
+    };
+  }, [currentProps.loggedIn, currentProps.history]);
 
   useEffect(() => {
-    if (isAlert) {
-      setButtonOff(false);
+    if (currentProps.isValid) {
+      currentProps.setButtonOff(false);
     } else {
-      if (currentProps.isValid) {
-        setButtonOff(false);
-      } else {
-        setButtonOff(true);
-      }
+      currentProps.setButtonOff(true);
     }
-  }, [isAlert, currentProps.isValid]);
+  }, [currentProps.isValid]);
 
   useEffect(() => {
-    const closeByEscape = (evt) => {
-      if (evt.key === "Escape" && loggedIn) {
-        handleClosePopups();
+    const closeByEscape = evt => {
+      if (evt.key === "Escape") {
+        if (!currentProps.loggedIn) {
+          currentProps.handleCloseInfoTooltip();
+        } else {
+          currentProps.handleClosePopups();
+        }
       }
     };
     document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
-  }, [isOpen, handleClosePopups, loggedIn]);
-
-  function handleLogin() {
-    setLoggedIn(true);
-  }
-
-  function handleClosePopups() {
-    setIsOpen(false);
-    setIsAlert(false);
-    history.goBack();
-    currentProps.resetForm();
-  }
+  }, [
+    currentProps.loggedIn,
+    currentProps.handleCloseInfoTooltip,
+    currentProps.handleClosePopups
+  ]);
 
   function toggleLike(card, isLiked) {
     if (!isLiked) {
@@ -146,54 +103,55 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((user) => user._id === currentUser._id);
+    const isLiked = card.likes.some(user => user._id === currentUser._id);
     toggleLike(card, isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((currentCard) =>
+      .then(newCard => {
+        setCards(state =>
+          state.map(currentCard =>
             currentCard._id === card._id ? newCard : currentCard
           )
         );
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }
 
   function handleCardClick(card) {
-    setSelectedCard({ ...card });
-    setIsOpen(true);
-    console.log(userToken)
+    currentProps.setSelectedCard({ ...card });
+    currentProps.setIsOpen(true);
   }
 
   function handleAlertPopupOpen(card) {
-    setSelectedCard(card);
-    setIsOpen(true);
-    setIsAlert(true);
+    currentProps.setSelectedCard(card);
+    currentProps.setIsOpen(true);
+    currentProps.setIsAlert(true);
   }
 
   function handleCardDelete(card) {
     api
       .deleteCard(card._id)
       .then(() => {
-        setCards((state) =>
-          state.filter((currentCard) => {
+        setCards(state =>
+          state.filter(currentCard => {
             return currentCard !== card;
           })
         );
-        handleClosePopups();
+        currentProps.handleClosePopups();
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }
 
   function handleSubmit(updateData, setState) {
-    setButtonText(renderLoading(true));
+    currentProps.setButtonText(renderLoading(true));
     updateData
-      .then((value) => {
+      .then(value => {
         setState(value);
-        handleClosePopups();
+        currentProps.handleClosePopups();
       })
-      .catch((err) => console.log(err))
+      .catch(err => console.log(err))
       .finally(() => {
-        setButtonText(renderLoading(false, buttonText));
+        currentProps.setButtonText(
+          renderLoading(false, currentProps.buttonText)
+        );
       });
   }
 
@@ -227,7 +185,7 @@ function App() {
         <CurrentPropsContext.Provider value={currentProps}>
           <div className="page__content">
             <Header />
-            <ProtectedRoute path={paths.main} loggedIn={loggedIn}>
+            <ProtectedRoute path={paths.main}>
               <Main
                 cards={cards}
                 onCardLike={handleCardLike}
@@ -242,33 +200,37 @@ function App() {
               <Register />
             </Route>
             <Switch>
-              <ProtectedRoute exact path={paths.avatar} loggedIn={loggedIn}>
+              <Route path={paths.inalert}>
+                <InfoTooltip />
+              </Route>
+              <Route path={paths.upalert}>
+                <InfoTooltip />
+              </Route>
+            </Switch>
+            <Switch>
+              <ProtectedRoute exact path={paths.avatar}>
                 <EditAvatarPopup onUpdateAvatar={handleUpdateAvatar} />
               </ProtectedRoute>
-              <ProtectedRoute path={paths.profile} loggedIn={loggedIn}>
+              <ProtectedRoute path={paths.profile}>
                 <EditProfilePopup onUpdateUser={handleUpdateUser} />
               </ProtectedRoute>
-              <ProtectedRoute path={paths.create} loggedIn={loggedIn}>
+              <ProtectedRoute path={paths.create}>
                 <AddPlacePopup handleAddPlaceSubmit={handleAddPlaceSubmit} />
               </ProtectedRoute>
-              <ProtectedRoute path={paths.delete} loggedIn={loggedIn}>
-                <AlertPopup
-                  handleCardDelete={handleCardDelete}
-                  selectedCard={selectedCard}
-                />
+              <ProtectedRoute path={paths.delete}>
+                <AlertPopup handleCardDelete={handleCardDelete} />
               </ProtectedRoute>
-              <ProtectedRoute path={paths.image} loggedIn={loggedIn}>
-                <ImagePopup
-                  src={selectedCard ? selectedCard.link : ""}
-                  alt={selectedCard ? selectedCard.name : ""}
-                />
+              <ProtectedRoute path={paths.image}>
+                <ImagePopup />
               </ProtectedRoute>
               <Route path={paths.home}>
-                <Redirect to={loggedIn ? paths.main : paths.login} />
+                <Redirect
+                  to={currentProps.loggedIn ? paths.main : paths.login}
+                />
               </Route>
               <Route path={paths.default}></Route>
             </Switch>
-            <Footer loggedIn={loggedIn} />
+            <Footer />
           </div>
         </CurrentPropsContext.Provider>
       </CurrentUserContext.Provider>

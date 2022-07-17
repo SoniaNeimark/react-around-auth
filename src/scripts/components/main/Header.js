@@ -1,38 +1,44 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 
-function Header(props) {
-  const location = useLocation();
-  const currentProps = React.useContext(CurrentPropsContext);
-  function handleClicK() {
-    currentProps.headerText.link = location.pathname === currentProps.login
-    ? "Log in"
-    : "Sign up";
-    currentProps.resetForm();
-    currentProps.setLoggedIn(false)
-    localStorage.removeItem('token');
-    currentProps.history.push('/login');
+function Header() {
+  const currentProps = useContext(CurrentPropsContext);
+  function handleSignOut() {
+    currentProps.setLoggedIn(false);
+    localStorage.removeItem("token");
+    currentProps.resetLoginForm();
   }
 
   return (
     <header className="header">
       <div className="logo" id="logo"></div>
-      <div className="header__text">
-      <p className="header__link header__link_user">{currentProps.userMail}</p>
-      <Link
-        to={
-          currentProps.loggedIn
-            ? currentProps.login
-            : location.pathname === currentProps.login
-            ? currentProps.register
-            : currentProps.login
-        }
-      >
-        <p className="header__link hover-opacity" onClick={handleClicK}>
-          {currentProps.headerText.link}
+      <div className="header__group">
+        <p className="header__text header__text_user">
+          {currentProps.loggedIn ? currentProps.userMail : ""}
         </p>
-      </Link>
+        <Link
+          to={
+            currentProps.location.pathname === currentProps.login
+              ? currentProps.register
+              : currentProps.login
+          }
+        >
+          <p
+            className={`header__text${
+              !currentProps.loggedIn ? " header__text_unsigned" : ""
+            } hover-opacity`}
+            onClick={handleSignOut}
+          >
+            {currentProps.location.pathname === currentProps.login ||
+            currentProps.location.pathname === currentProps.inalert
+              ? "Sign up"
+              : currentProps.location.pathname === currentProps.register ||
+                currentProps.location.pathname === currentProps.upalert
+              ? "Log in"
+              : "Log out"}
+          </p>
+        </Link>
       </div>
     </header>
   );

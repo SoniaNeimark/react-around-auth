@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CurrentPropsContext } from "../../../contexts/CurrentPropsContext";
 import Input from "./Input";
 
 function FormInput(props) {
-  const currentProps = React.useContext(CurrentPropsContext);
+  const currentProps = useContext(CurrentPropsContext);
   const error = currentProps.errors[props.name];
   const propsRef = props.propsRef;
 
   return (
     <>
       <Input
-        className={!props.login ? `popup-box__input${
-          error ? " popup-box__input_type_error" : ""
-        }` : `popup-box__input popup-box__input_dark${
-          error ? " popup-box__input_type_error" : ""
-        }`}
+        className={
+          !props.login
+            ? `popup-box__input${error ? " popup-box__input_type_error" : ""}`
+            : `popup-box__input popup-box__input_dark${
+                error ? " popup-box__input_type_error" : ""
+              }`
+        }
         type={props.type}
         id={props.name}
         name={props.name}

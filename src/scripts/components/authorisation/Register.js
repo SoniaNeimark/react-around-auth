@@ -1,38 +1,32 @@
-import { useState, useContext } from "react";
+import React, { useContext } from "react";
 import Form from "../basic/form/Form";
 import FormInput from "../basic/input/FormInput";
 import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 import * as auth from "../../utils/auth.js";
 import { withRouter } from "react-router-dom";
 
-function Register(props) {
+function Register() {
   const currentProps = useContext(CurrentPropsContext);
-  //const [user, setUser] = useState({ email: "", password: "" });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  //const history = useHistory();
 
-  /*React.useEffect(() => {
-    email.current.value = "";
-    password.current.value = "";
-  }, [email, password]);*/
-
-  function handleSubmit() {
-    //console.log(user.email, user.password)
-    auth.register(password, email).then((res) => {
-      if (res) {
-        setMessage("");
-        currentProps.history.push(currentProps.login);
-      } else {
-        setMessage("Something went wrong!");
-      }
-    });
-
-    /*props.onLogin({
-      email: user.email,
-      password: user.password,
-    });*/
+  function handleSignUp() {
+    auth
+      .register(
+        currentProps.password,
+        currentProps.email,
+        currentProps.handleFetchError
+      )
+      .then(res => {
+        if (res) {
+          currentProps.setSuccess(true);
+          currentProps.history.push(currentProps.inalert);
+          currentProps.setIsOpen(true);
+        } else {
+          const error = new Error("Something went wrong");
+          error.name = "signupError";
+          throw error;
+        }
+      })
+      .catch(error => error && currentProps.handleFetchError());
   }
 
   return (
@@ -44,16 +38,17 @@ function Register(props) {
       link={currentProps.login}
       linkText="Sign up"
       buttonText="Sign up"
-      onSubmit={handleSubmit}
+      onSubmit={handleSignUp}
     >
       <FormInput
         type="email"
         name="email"
         placeholder="Email"
+        value={currentProps.email}
         login={true}
         minLength="4"
-        onChange={(evt) => {
-          setEmail(evt.target.value);
+        onChange={evt => {
+          currentProps.setEmail(evt.target.value);
         }}
       />
 
@@ -61,10 +56,11 @@ function Register(props) {
         type="password"
         name="password"
         placeholder="Password"
+        value={currentProps.password}
         login={true}
         minLength="4"
-        onChange={(evt) => {
-          setPassword(evt.target.value);
+        onChange={evt => {
+          currentProps.setPassword(evt.target.value);
         }}
       />
     </Form>

@@ -1,6 +1,6 @@
-import React from 'react';
+import { createContext } from "react";
 
-export const CurrentUserContext = React.createContext();
+export const CurrentUserContext = createContext();
 export function getCurrentUser(data) {
-	return data;
-};
+  return data;
+}

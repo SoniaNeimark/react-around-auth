@@ -1,10 +1,9 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { CurrentPropsContext } from '../../contexts/CurrentPropsContext';
-//  import paths from '../utils/paths';
+import React, { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
+import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 
-function ProtectedRoute({ children, loggedIn, ...props }) {
-  const currentProps = React.useContext(CurrentPropsContext)
+function ProtectedRoute({ children, ...props }) {
+  const currentProps = useContext(CurrentPropsContext);
   return (
     <Route {...props}>
       {currentProps.loggedIn ? children : <Redirect to={currentProps.login} />}

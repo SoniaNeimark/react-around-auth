@@ -1,10 +1,10 @@
-import { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 import PopupWithForm from "../basic/popup/PopupWithForm";
 import FormInput from "../basic/input/FormInput";
 
 function AddPlacePopup(props) {
-  const currentProps = useContext(CurrentPropsContext)
+  const currentProps = useContext(CurrentPropsContext);
   const title = useRef("");
   const url = useRef("");
 
@@ -15,13 +15,16 @@ function AddPlacePopup(props) {
 
   return (
     <PopupWithForm
-      onSubmit={() => props.handleAddPlaceSubmit({
-        name: title.current.value,
-        link: url.current.value,
-      })}
+      onSubmit={() =>
+        props.handleAddPlaceSubmit({
+          name: title.current.value,
+          link: url.current.value
+        })
+      }
       buttonText="Create"
       name="add"
       title="New place"
+      create={true}
     >
       <FormInput
         type="text"

@@ -1,3 +1,3 @@
-import React from 'react';
+import { createContext } from "react";
 
-export const CurrentPropsContext = React.createContext();
+export const CurrentPropsContext = createContext();

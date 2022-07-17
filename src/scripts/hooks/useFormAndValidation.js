@@ -5,7 +5,7 @@ export function useFormAndValidation() {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: e.target.validationMessage });
@@ -29,6 +29,6 @@ export function useFormAndValidation() {
     resetForm,
     setValues,
     setIsValid,
-    setErrors,
+    setErrors
   };
 }

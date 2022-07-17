@@ -1,13 +1,23 @@
-import PopupWithForm from "../basic/popup/PopupWithForm";
+import React, { useContext } from "react";
+import PopupBox from "../basic/popup/PopupBox";
+import Button from "../basic/button/Button";
+import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 
 function AlertPopup(props) {
+  const currentProps = useContext(CurrentPropsContext);
 
   return (
-    <PopupWithForm
-      name="alert"
-      title="Are you sure?"
-      onSubmit={() => props.handleCardDelete(props.selectedCard)}
-    />
+    <PopupBox name="alert">
+      <h2 className="popup-box__title popup-box__title_centered">
+        Are you sure?
+      </h2>
+      <Button
+        type={"button"}
+        onClick={() => props.handleCardDelete(currentProps.selectedCard)}
+        disabled={false}
+        value="Yes"
+      ></Button>
+    </PopupBox>
   );
 }
 

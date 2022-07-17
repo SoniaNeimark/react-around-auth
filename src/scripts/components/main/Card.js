@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Card(props) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const isLiked = props.likes.some((user) => checkIfOwner(user));
+  const currentUser = useContext(CurrentUserContext);
+  const isLiked = props.likes.some(user => checkIfOwner(user));
   const isOwn = checkIfOwner(props.owner);
 
   function checkIfOwner(owner) {
@@ -15,12 +15,12 @@ function Card(props) {
     <li className="elements__card">
       <div className="elements__image-wrapper">
         <Link to={props.imageLink}>
-        <img
-          className="elements__image hover-opacity open-popup"
-          onClick={props.onCardClick}
-          src={props.src}
-          alt={props.title}
-        />
+          <img
+            className="elements__image hover-opacity open-popup"
+            onClick={props.onCardClick}
+            src={props.src}
+            alt={props.title}
+          />
         </Link>
       </div>
       <h2 className="elements__title">{props.title}</h2>
@@ -35,13 +35,13 @@ function Card(props) {
         <p className="elements__like-number">{props.likes.length}</p>
       </div>
       <Link to={props.alertLink}>
-      <button
-        className={`delete-button hover-opacity${
-          isOwn ? " delete-button_visible" : ""
-        }`}
-        type="button"
-        onClick={props.onCardDelete}
-      ></button>
+        <button
+          className={`delete-button hover-opacity${
+            isOwn ? " delete-button_visible" : ""
+          }`}
+          type="button"
+          onClick={props.onCardDelete}
+        ></button>
       </Link>
     </li>
   );

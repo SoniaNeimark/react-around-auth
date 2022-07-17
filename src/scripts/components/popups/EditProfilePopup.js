@@ -1,12 +1,12 @@
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PopupWithForm from "../basic/popup/PopupWithForm";
 import FormInput from "../basic/input/FormInput";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { CurrentPropsContext } from "../../contexts/CurrentPropsContext"
+import { CurrentPropsContext } from "../../contexts/CurrentPropsContext";
 
 function EditProfilePopup(props) {
   const currentUser = useContext(CurrentUserContext);
-  const currentProps = useContext(CurrentPropsContext)
+  const currentProps = useContext(CurrentPropsContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -32,6 +32,7 @@ function EditProfilePopup(props) {
       onSubmit={handleSubmit}
       name="profile"
       title="Edit profile"
+      buttonText="Save"
     >
       <FormInput
         value={name}

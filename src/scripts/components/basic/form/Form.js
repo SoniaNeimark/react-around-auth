@@ -1,19 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CurrentPropsContext } from "../../../contexts/CurrentPropsContext";
+import Button from "../button/Button";
 
 function Form(props) {
-  const currentProps = React.useContext(CurrentPropsContext);
-
-  React.useEffect(() => {
-    if (currentProps.isAlert) {
-      currentProps.setButtonText("Yes");
-    } else if (props.buttonText) {
-      currentProps.setButtonText(props.buttonText);
-    } else {
-      currentProps.setButtonText("Save");
-    }
-  }, [currentProps.isOpen, currentProps, props.buttonText]);
+  const currentProps = useContext(CurrentPropsContext);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -42,40 +33,24 @@ function Form(props) {
         >
           {props.title}
         </h2>
-        {!props.login && (
-          <button
-            className={`close-button close-button_${props.name} hover-opacity`}
-            type="button"
-            onClick={currentProps.handleClosePopups}
-          ></button>
-        )}
       </div>
-      <fieldset className="popup-box__fieldset">
-        {props.children}
-        <button
-          className={`popup-box__button popup-box__button_${
-            !props.login ? props.name : "login"
-          }${currentProps.buttonOff ? " popup-box__button_disabled" : ""}`}
-          type="submit"
-          disabled={currentProps.buttonOff}
-        >
-          {currentProps.buttonText}
-        </button>
-        {props.login && (
-          <Link to={props.link}>
-            <p
-              className="authentication__link hover-opacity"
-              onClick={() => {
-                currentProps.setHeaderText({ link: props.linkText });
-                currentProps.resetForm();
-                console.log(currentProps.loggedIn);
-              }}
-            >
-              {props.bottomText}
-            </p>
-          </Link>
-        )}
-      </fieldset>
+      <fieldset className="popup-box__fieldset">{props.children}</fieldset>
+      <Button
+        type={"submit"}
+        login={props.login}
+        value={props.buttonText}
+        disabled={currentProps.buttonOff}
+      ></Button>
+      {props.login && (
+        <Link to={props.link}>
+          <p
+            className="authentication__link hover-opacity"
+            onClick={currentProps.resetLoginForm}
+          >
+            {props.bottomText}
+          </p>
+        </Link>
+      )}
     </form>
   );
 }

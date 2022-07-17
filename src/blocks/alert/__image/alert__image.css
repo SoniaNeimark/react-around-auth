@@ -1,0 +1,11 @@
+.alert__image {
+  width: 120px;
+  height: 120px;
+  margin-top: 60px;
+  background: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("../../../images/svg/success.svg");
+  border: none;
+  cursor: pointer;
+}
