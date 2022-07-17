@@ -66,7 +66,7 @@ function App() {
           .catch(err => console.log(err));
       }
     };
-  }, [currentProps.loggedIn, currentProps.history]);
+  }, []);
 
   useEffect(() => {
     if (currentProps.isValid) {
