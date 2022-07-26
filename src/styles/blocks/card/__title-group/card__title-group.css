@@ -1,0 +1,6 @@
+.card__title-group {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}

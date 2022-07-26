@@ -1,0 +1,15 @@
+.profile__info-group {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+  align-items: center;
+
+}
+@media screen and (min-width: 1024px) {
+  .profile__info-group {
+    max-width: 586px;
+    align-items: flex-start;
+    align-self: center;
+  }
+}

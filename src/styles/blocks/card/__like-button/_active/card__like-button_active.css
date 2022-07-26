@@ -1,0 +1,5 @@
+.card__like-button_active {
+  width: 20px;
+  height: 18px;
+  background-image: url(../../../../../images/like_active.svg);
+}

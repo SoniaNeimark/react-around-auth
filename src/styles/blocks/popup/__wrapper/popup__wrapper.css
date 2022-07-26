@@ -1,0 +1,17 @@
+.popup__wrapper {
+  width: 282px;
+  display: flex;
+  flex-flow: column;
+}
+
+@media screen and (min-width: 1024px) {
+  .popup__wrapper {
+    width: 430px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__wrapper {
+    max-width: 95%;
+  }
+}

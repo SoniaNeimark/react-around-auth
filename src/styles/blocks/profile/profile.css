@@ -1,0 +1,19 @@
+.profile {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-bottom: 38px;
+}
+
+@media screen and (min-width: 1024px) {
+  .profile {
+    max-width: 100%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 120px auto 150px;
+    grid-column-gap: 27.5px;
+    margin-bottom: 46px;
+  }
+}

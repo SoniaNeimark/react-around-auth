@@ -1,0 +1,14 @@
+.header__main-group {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 28px auto 32px auto;
+}
+
+@media screen and (min-width: 624px) {
+  .header__main-group {
+    margin: 45px auto 41px auto;
+  }
+}

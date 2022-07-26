@@ -1,0 +1,19 @@
+.hamburger-menu {
+  width: 24px;
+  height: 18px;
+  margin: 0 27px 32px 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+}
+
+@media screen and (min-width: 624px) {
+  .hamburger-menu {
+    display: none;
+    visibility: hidden;
+    user-select: none;
+  }
+}

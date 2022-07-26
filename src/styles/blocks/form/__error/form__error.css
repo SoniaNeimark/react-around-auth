@@ -1,0 +1,12 @@
+.form__error {
+  width: 100%;
+  min-height: 15px;
+  /*visibility: hidden;*/
+  display: none;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+  border: none;
+  padding-top: 5px;
+  margin: 0;
+}

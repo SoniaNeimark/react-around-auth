@@ -1,0 +1,9 @@
+.card__like-group {
+  width: 21px;
+  height: 85px;
+  margin-right: 18px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}

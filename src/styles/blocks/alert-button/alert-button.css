@@ -1,0 +1,12 @@
+.alert-button {
+  width: 120px;
+  height: 120px;
+  margin: 50px auto 40px auto;
+  padding: 0;
+  background-image: url(../../../images/failed.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  box-sizing: border-box;
+}

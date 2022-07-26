@@ -1,0 +1,5 @@
+.header__text-group_size_mobile {
+  display: flex;
+  flex-flow: column;
+  visibility: visible;
+}

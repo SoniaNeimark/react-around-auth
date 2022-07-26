@@ -1,0 +1,11 @@
+.close-button_place_popup-top-right {
+  margin: 0;
+  align-self: flex-end;
+  transform: translate(1px, -3px) rotate(45deg);
+}
+
+@media screen and (min-width: 624px) {
+  .close-button_place_popup-top-right {
+    transform: translate(100%, 0px) rotate(45deg);
+  }
+}

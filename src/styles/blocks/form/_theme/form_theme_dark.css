@@ -1,0 +1,10 @@
+.form_theme_dark {
+  width: 260px;
+  color: white;
+}
+
+@media screen and (min-width: 624px) {
+  .form {
+    width: 358px;
+  }
+}

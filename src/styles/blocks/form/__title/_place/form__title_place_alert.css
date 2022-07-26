@@ -1,0 +1,13 @@
+.form__title_place_alert {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  display: block;
+  padding-bottom: 10px;
+}
+
+@media screen and (min-width: 1024px) {
+  .form__title_place_alert {
+    padding-bottom: 24px;
+  }
+}

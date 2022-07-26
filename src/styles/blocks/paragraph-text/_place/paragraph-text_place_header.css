@@ -1,0 +1,20 @@
+.paragraph-text_place_header {
+  text-align: center;
+  padding: 0;
+}
+.paragraph-text_place_header:last-child {
+  color: #A9A9A9;
+}
+
+
+@media screen and (min-width: 624px) {
+  .paragraph-text_place_header {
+    text-align: right;
+    padding: 0;
+  }
+
+  /*.paragraph-text_place_header:last-child {
+    margin-left: 10px;
+  }*/
+}
+

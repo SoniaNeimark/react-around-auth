@@ -1,0 +1,40 @@
+.card {
+  position: relative;
+  width: 282px;
+  height: 367px;
+  display: grid;
+  grid-template-columns: 282px;
+  grid-template-rows: 282px 85px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 624px) and (max-width: 1023px) {
+  .card {
+    margin-right: 20px;
+    margin-left: 0;
+  }
+  .card:nth-of-type(2n) {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .card {
+    margin-left: 0;
+    margin-right: 17px;
+    margin-bottom: 17px;
+  }
+  .card:nth-of-type(3n) {
+    margin-right: 0;
+  }
+
+}
+
+@media screen and (max-width: 320px) {
+  .elements__card {
+    max-width: 100%;
+  }
+}

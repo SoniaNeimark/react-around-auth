@@ -1,0 +1,15 @@
+.authorisation__bottom-link {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+@media screen and (min-width: 624px) {
+  .authorisation__bottom-link {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+}

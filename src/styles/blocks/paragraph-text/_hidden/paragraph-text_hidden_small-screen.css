@@ -1,0 +1,13 @@
+.paragraph-text_hidden_small-screen {
+  display: none;
+  visibility: hidden;
+}
+@media screen and (min-width: 624px) {
+  .paragraph-text_hidden_small-screen {
+    display: block;
+    visibility: visible;
+  }
+  .paragraph-text_hidden_small-screen:first-child {
+    padding-right: 10px;
+  }
+}

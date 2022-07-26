@@ -1,13 +1,69 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@import url(./vendor/normalize.css);
+@import url(./styles/fonts/fonts.css);
+@import url(./styles/blocks/page/page.css);
+@import url(./styles/blocks/page/__content/page__content.css);
+@import url(./styles/blocks/hover-opacity/hover-opacity.css);
+@import url(./styles/blocks/header/header.css);
+@import url(./styles/blocks/header/__main-group/header__main-group.css);
+@import url(./styles/blocks/header/__logo/header__logo.css);
+@import url(./styles/blocks/header/__text-group/header__text-group.css);
+@import url(./styles/blocks/header/__text-group/_size/header__text-group_size_mobile.css);
+@import url(./styles/blocks/hamburger-menu/hamburger-menu.css);
+@import url(./styles/blocks/hamburger-menu/__line/hamburger-menu__line.css);
+@import url(./styles/blocks/header/__mobile-menu/header__mobile-menu.css);
+@import url(./styles/blocks/header/__mobile-menu/_opened/header__mobile-menu_opened.css);
+@import url(./styles/blocks/close-button/close-button.css);
+@import url(./styles/blocks/close-button/_place/close-button_place_header.css);
+@import url(./styles/blocks/close-button/_place/close-button_place_popup-top-right.css);
+@import url(./styles/blocks/paragraph-text/paragraph-text.css);
+@import url(./styles/blocks/paragraph-text/_place/paragraph-text_place_header.css);
+@import url(./styles/blocks/paragraph-text/_hidden/paragraph-text_hidden_small-screen.css);
+@import url(./styles/blocks/paragraph-text/_hidden/paragraph-text_hidden_large-screen.css);
+@import url(./styles/blocks/paragraph-text/_place/paragraph-text_place_image.css);
+@import url(./styles/blocks/main-content/main-content.css);
+@import url(./styles/blocks/authorisation/authorisation.css);
+@import url(./styles/blocks/authorisation/__bottom-link/authorisation__bottom-link.css);
+@import url(./styles/blocks/profile/profile.css);
+@import url(./styles/blocks/profile/__image/profile__image.css);
+@import url(./styles/blocks/profile/__avatar-edit/profile__avatar-edit.css);
+@import url(./styles/blocks/profile/__button-avatar-edit/profile__button-avatar-edit.css);
+@import url(./styles/blocks/profile/__name-group/profile__name-group.css);
+@import url(./styles/blocks/profile/__title/profile__title.css);
+@import url(./styles/blocks/profile/__button-edit/profile__button-edit.css);
+@import url(./styles/blocks/profile/__info-group/profile__info-group.css);
+@import url(./styles/blocks/profile/__button-add/profile__button-add.css);
+@import url(./styles/blocks/gallery/gallery.css);
+@import url(./styles/blocks/gallery/__cards/gallery__cards.css);
+@import url(./styles/blocks/card/card.css);
+@import url(./styles/blocks/card/__image/card__image.css);
+@import url(./styles/blocks/card/__title-group/card__title-group.css);
+@import url(./styles/blocks/card/__title/card__title.css);
+@import url(./styles/blocks/card/__like-group/card__like-group.css);
+@import url(./styles/blocks/card/__like-button/card__like-button.css);
+@import url(./styles/blocks/card/__like-button/_active/card__like-button_active.css);
+@import url(./styles/blocks/card/__likes-number/card__likes-number.css);
+@import url(./styles/blocks/card/__delete-button/card__delete-button.css);
+@import url(./styles/blocks/card/__delete-button/_visible/card__delete-button_visible.css);
+@import url(./styles/blocks/popup/popup.css);
+@import url(./styles/blocks/popup/_opened/popup_opened.css);
+@import url(./styles/blocks/popup/__wrapper/popup__wrapper.css);
+@import url(./styles/blocks/popup/__wrapper/_image/popup__wrapper_image.css);
+@import url(./styles/blocks/popup/__container/popup__container.css);
+@import url(./styles/blocks/popup/__image/popup__image.css);
+@import url(./styles/blocks/form/form.css);
+@import url(./styles/blocks/form/_theme/form_theme_dark.css);
+@import url(./styles/blocks/form/__title/form__title.css);
+@import url(./styles/blocks/form/__title/_theme/form__title_theme_dark.css);
+@import url(./styles/blocks/form/__title/_place/form__title_place_alert.css);
+@import url(./styles/blocks/form/__input/form__input.css);
+@import url(./styles/blocks/form/__input/_theme/form__input_theme_dark.css);
+@import url(./styles/blocks/form/__error/form__error.css);
+@import url(./styles/blocks/form/__error/_visible/form__error_visible.css);
+@import url(./styles/blocks/submit-button/submit-button.css);
+@import url(./styles/blocks/submit-button/_theme/submit-button_theme_dark.css);
+@import url(./styles/blocks/submit-button/_active/submit-button_active.css);
+@import url(./styles/blocks/submit-button/_active/_theme/submit-button_active_theme_dark.css);
+@import url(./styles/blocks/alert-button/alert-button.css);
+@import url(./styles/blocks/alert-button/_succsess/alert-button_success.css);
+@import url(./styles/blocks/paragraph-text/_place/paragraph-text_place_signin-alert.css);
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}

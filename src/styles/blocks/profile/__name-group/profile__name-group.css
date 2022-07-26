@@ -1,0 +1,20 @@
+.profile__name-group {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .profile__name-group {
+    justify-content: flex-start;
+    max-width: 555px;
+    margin: 0;
+  }
+}
+
+
+
+
+

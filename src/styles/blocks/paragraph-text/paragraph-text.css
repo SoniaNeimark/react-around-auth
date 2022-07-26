@@ -1,0 +1,12 @@
+.paragraph-text {
+  font-size: 14px;
+  line-height: 1.22;
+  font-style: normal;
+  margin: 0;
+}
+
+@media screen and (min-width: 624px) {
+  .paragraph-text {
+    font-size: 18px;
+  }
+}
