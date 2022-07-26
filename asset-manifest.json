@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/react-around-auth/static/css/main.2387a963.css",
-    "main.js": "/react-around-auth/static/js/main.31a22492.js",
+    "main.css": "/react-around-auth/static/css/main.5524654f.css",
+    "main.js": "/react-around-auth/static/js/main.4620922e.js",
     "static/js/787.b0e40ee8.chunk.js": "/react-around-auth/static/js/787.b0e40ee8.chunk.js",
     "static/media/Inter-Black.woff": "/react-around-auth/static/media/Inter-Black.c6938660eec019fefd68.woff",
     "static/media/Inter-Regular.woff": "/react-around-auth/static/media/Inter-Regular.8c206db99195777c6769.woff",
     "static/media/Inter-Medium.woff2": "/react-around-auth/static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
     "static/media/Inter-Black.woff2": "/react-around-auth/static/media/Inter-Black.15ca31c0a2a68f76d2d1.woff2",
     "static/media/Inter-Regular.woff2": "/react-around-auth/static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
-    "static/media/logo.svg": "/react-around-auth/static/media/logo.4e8e0a1d604782a0dff8.svg",
-    "static/media/like.svg": "/react-around-auth/static/media/like.3826c074a1b94b101e38.svg",
+    "static/media/logo.svg": "/react-around-auth/static/media/logo.d7e6d454730d9a166669.svg",
+    "static/media/like.svg": "/react-around-auth/static/media/like.d8e61cba9fb6e74a66f2.svg",
     "index.html": "/react-around-auth/index.html",
-    "static/media/trash.svg": "/react-around-auth/static/media/trash.8cb59aa98088a1653f62.svg",
-    "static/media/fail.svg": "/react-around-auth/static/media/fail.df8eddf661ff88f2d0ef.svg",
-    "static/media/success.svg": "/react-around-auth/static/media/success.1b6082f862eac35e2514.svg",
-    "static/media/like_active.svg": "/react-around-auth/static/media/like_active.226461bd64622361ffb2.svg",
-    "static/media/edit.svg": "/react-around-auth/static/media/edit.8667ac4a523e8fc42e59.svg",
-    "static/media/add_close.svg": "/react-around-auth/static/media/add_close.d86bb2edc2f6eadb96b7.svg",
-    "main.2387a963.css.map": "/react-around-auth/static/css/main.2387a963.css.map",
-    "main.31a22492.js.map": "/react-around-auth/static/js/main.31a22492.js.map",
+    "static/media/trash.svg": "/react-around-auth/static/media/trash.e86d1162111d2fde6912.svg",
+    "static/media/failed.svg": "/react-around-auth/static/media/failed.df8eddf661ff88f2d0ef.svg",
+    "static/media/ok.svg": "/react-around-auth/static/media/ok.1b6082f862eac35e2514.svg",
+    "static/media/like_active.svg": "/react-around-auth/static/media/like_active.8dbff8e33c9ac4945b43.svg",
+    "static/media/edit.svg": "/react-around-auth/static/media/edit.d34e56a394bd491f516f.svg",
+    "static/media/add_close.svg": "/react-around-auth/static/media/add_close.29ae77b278c0e0e61c8b.svg",
+    "main.5524654f.css.map": "/react-around-auth/static/css/main.5524654f.css.map",
+    "main.4620922e.js.map": "/react-around-auth/static/js/main.4620922e.js.map",
     "787.b0e40ee8.chunk.js.map": "/react-around-auth/static/js/787.b0e40ee8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2387a963.css",
-    "static/js/main.31a22492.js"
+    "static/css/main.5524654f.css",
+    "static/js/main.4620922e.js"
   ]
 }
