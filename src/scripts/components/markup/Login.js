@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import Form from "../elements/Form";
 import InputWithErrorField from "../basic/InputWithErrorField";
 import SignInAlertPopup from "./SignInAlertPopup";
+import { DocPropsContext } from "../../contexts/DocPropsContext";
 
 const Login = (props) => {
+  const docProps = useContext(DocPropsContext)
   return (
     <section className="authorisation">
       <Form
         name="signinpopup"
-        onSubmit={props.onSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          props.onSubmit(
+            docProps.values["email"],
+            docProps.values["password"]
+          )
+        }}
         dark={true}
         title="Log in"
         buttonText="Log in"

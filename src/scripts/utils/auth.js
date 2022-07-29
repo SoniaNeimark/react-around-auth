@@ -11,23 +11,16 @@ export const register = (email, password) => {
   })
     .then((response) => {
       if (!response) {
-        throw new Error()
+        throw new Error("No response");
       }
       return response.json();
-
-      }
-    )
+    })
     .then((res) => {
       if (!res.data) {
-        throw new Error(res)
+        return res;
       }
-
-      console.log(res);
       return res;
     })
-    .catch((err) => {
-      console.log(err);
-    });
 };
 
 // auth.js
@@ -42,19 +35,18 @@ export const authorize = (email, password) => {
     body: JSON.stringify({ email: email, password: password }),
   })
     .then((response) => {
-      if (response.status >=400) {
-        throw new Error(response.json)
+      if (response.status >= 400) {
+        return { message: response.status };
       }
-      return response.json()
+      return response.json();
     })
     .then((data) => {
       if (data.token) {
-        console.log(data)
         localStorage.setItem("token", data.token);
         return data;
       }
+      return;
     })
-    .catch((err) => err);
 };
 
 export const getContent = (token) => {
@@ -66,7 +58,6 @@ export const getContent = (token) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((res) => res.json())
-    .then((data) => data)
-    .catch((err) => err)
+    .then(res => res.json())
+    .then(data => data)
 };

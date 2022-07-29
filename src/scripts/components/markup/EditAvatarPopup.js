@@ -20,6 +20,7 @@ const EditAvatarPopup = (props) => {
         type="url"
         placeholder="Image link"
       />
+
     </PopupWithForm>
   );
 };

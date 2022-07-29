@@ -24,7 +24,7 @@ const AddCardPopup = (props) => {
       <InputWithErrorField
         name="link"
         type="url"
-        placeholder="About me"
+        placeholder="Image link"
       />
     </PopupWithForm>
   );

@@ -7,18 +7,36 @@ const InputWithErrorField = (props) => {
   //const dark = props["dark"]
 
   React.useEffect(() => {
-    ref.current.value = docProps.values[props.name] ? docProps.values[props.name] : "";
+    ref.current.value = docProps.values[props.name]
+      ? docProps.values[props.name]
+      : "";
   }, [docProps.values, props.name]);
   return (
     <>
       <input
-        className={`form__input${!docProps.loggedIn ? " form__input_theme_dark" : ""}`}
+        className={`form__input${
+          docProps.location.pathname !== docProps.main
+            ? " form__input_theme_dark"
+            : ""
+        }${
+          !docProps.errors[props.name]
+            ? ""
+            : docProps.location.pathname !== docProps.main
+            ? " form__input_type_error form__input_type_error_theme_dark"
+            : " form__input_type_error"
+        }`}
         key={props.name}
         required
         {...props}
         ref={ref}
       />
-      <p className={`form__error form__error_visible`}>{docProps.errors[props.name]}</p>
+      <p
+        className={`form__error${
+          docProps.errors[props.name] ? " form__error_visible" : ""
+        }`}
+      >
+        {docProps.errors[props.name]}
+      </p>
     </>
   );
 };

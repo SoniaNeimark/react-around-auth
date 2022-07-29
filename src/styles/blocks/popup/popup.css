@@ -16,4 +16,5 @@
   opacity: 0;
   user-select: none;
   transition: visibility 0s linear 400ms, opacity linear .2s;
+  z-index: 15;
 }

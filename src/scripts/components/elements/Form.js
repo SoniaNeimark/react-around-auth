@@ -6,7 +6,7 @@ const Form = (props) => {
   const [buttonText, setButtonText] = useState("");
   useEffect(() => {
     setButtonText(props.buttonText);
-  }, [docProps.popup, setButtonText]);
+  }, [docProps.popup, setButtonText, props.buttonText]);
   return (
     <form
       name={props.name}
@@ -36,10 +36,11 @@ const Form = (props) => {
         }`}
         disabled={!docProps.isValid}
         onClick={(e) => {
-          if (!props.onButtonClick) {
-            setButtonText("Loading...");
+          if (props.onButtonClick) {
+            props.onButtonClick(e);
+
           }
-          props.onButtonClick(e);
+          return setButtonText("Loading...");
         }}
       >
         {buttonText}
