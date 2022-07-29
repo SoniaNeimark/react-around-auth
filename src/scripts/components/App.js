@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import api from "../utils/api";
 import * as auth from "../utils/auth";
-import ProtectedRoute from "./routs/ProtectedRout";
 import { CurrentUserContext } from "../contexts/CurrentUserComtext";
 import { DocPropsContext } from "../contexts/DocPropsContext";
 import { useFormAndValidation } from "../hooks/useFormAndValidation";
@@ -70,6 +69,7 @@ function App() {
     return setCurrentUser({});
   };
 
+  /** set cards array */
   const setInitialCards = () => {
     if (loggedIn) {
       return api
@@ -106,20 +106,22 @@ function App() {
     }
   };
 
+  const tokenCheck = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      return auth
+        .getContent(token)
+        .then((res) => {
+          setUserMail(res.data.email);
+          return res.data.email ? setLoggedIn(true) : setLoggedIn(false);
+        })
+        .catch((err) => console.log(err));
+    }
+    return setLoggedIn(false);
+  };
+
   useEffect(() => {
-    return function tokenCheck() {
-      const token = localStorage.getItem("token");
-      if (token) {
-        return auth
-          .getContent(token)
-          .then((res) => {
-            setUserMail(res.data.email);
-            return res.data.email ? setLoggedIn(true) : setLoggedIn(false);
-          })
-          .catch((err) => console.log(err));
-      }
-      return setLoggedIn(false);
-    };
+    tokenCheck();
   }, []);
 
   /**  set current user and cards on loggedIn state change */
@@ -279,73 +281,68 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <DocPropsContext.Provider value={docProps}>
           <div className="page__content">
-            <Header
-              location={location}
-              navigate={navigate}
-              login={paths.login}
-              main={paths.main}
-              register={paths.register}
-              signin={paths.login}
-              loggedIn={loggedIn}
-              handleLogin={handleLogin}
-              handleLogout={handleLogout}
-              toggleHamburgerClicked={toggleHamburgerClicked}
-              hamburgerClicked={hamburgerClicked}
-              setHamburgerClicked={setHamburgerClicked}
-              userMail={userMail}
-              currentUser={currentUser}
-              onClose={() => setHamburgerClicked(false)}
-              onOpen={() => setHamburgerClicked(true)}
-              togglePage={togglePage}
-            />
-
             <Routes>
               <Route
-                index
+                path={paths.home}
                 element={
-                  <ProtectedRoute
-                    loggedIn={loggedIn}
-                    main={paths.main}
+                  <Header
+                    location={location}
+                    navigate={navigate}
                     login={paths.login}
-                  />
-                }
-              />
-              <Route
-                path={paths.main}
-                element={
-                  <Main
-                    setSelectedCard={docProps.setSelectedCard}
-                    cards={cards}
-                    isLiked={isLiked}
-                    isOwn={isOwn}
-                    handleSubmit={handleSubmitProfile}
-                    handleSubmitAdd={handleSubmitAddCard}
-                    handleCardLike={handleCardLike}
-                    handleCardDelete={handleCardDelete}
-                  />
-                }
-              />
-              <Route
-                path={paths.login}
-                element={
-                  <Login
-                    onClick={handleSigninAlertClick}
+                    main={paths.main}
+                    register={paths.register}
+                    signin={paths.login}
+                    loggedIn={loggedIn}
+                    handleLogin={handleLogin}
+                    handleLogout={handleLogout}
+                    toggleHamburgerClicked={toggleHamburgerClicked}
+                    hamburgerClicked={hamburgerClicked}
+                    setHamburgerClicked={setHamburgerClicked}
+                    userMail={userMail}
+                    currentUser={currentUser}
+                    onClose={() => setHamburgerClicked(false)}
+                    onOpen={() => setHamburgerClicked(true)}
                     togglePage={togglePage}
-                    onSubmit={handleSubmitLogin}
                   />
                 }
-              />
-              <Route
-                path={paths.register}
-                element={
-                  <Register
-                    togglePage={togglePage}
-                    onClick={handleSigninAlertClick}
-                    onSubmit={handleSubmitRegister}
-                  />
-                }
-              />
-              <Route path={paths.default} element={<h1>Wrong request</h1>} />
+              >
+                <Route
+                  path={paths.main}
+                  element={
+                    <Main
+                      setSelectedCard={docProps.setSelectedCard}
+                      cards={cards}
+                      isLiked={isLiked}
+                      isOwn={isOwn}
+                      handleSubmit={handleSubmitProfile}
+                      handleSubmitAdd={handleSubmitAddCard}
+                      handleCardLike={handleCardLike}
+                      handleCardDelete={handleCardDelete}
+                    />
+                  }
+                />
+                <Route
+                  path={paths.login}
+                  element={
+                    <Login
+                      onClick={handleSigninAlertClick}
+                      togglePage={togglePage}
+                      onSubmit={handleSubmitLogin}
+                    />
+                  }
+                />
+                <Route
+                  path={paths.register}
+                  element={
+                    <Register
+                      togglePage={togglePage}
+                      onClick={handleSigninAlertClick}
+                      onSubmit={handleSubmitRegister}
+                    />
+                  }
+                />
+                <Route path={paths.default} element={<h1>Wrong request</h1>} />
+              </Route>
             </Routes>
           </div>
         </DocPropsContext.Provider>

@@ -25,7 +25,6 @@ const Header = (props) => {
         <div className="header__main-group">
           <div
             className="header__logo"
-            onClick={() => console.log(props.params)}
           ></div>
 
           {props.loggedIn && !props.hamburgerClicked ? (
