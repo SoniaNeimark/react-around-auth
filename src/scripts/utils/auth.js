@@ -16,10 +16,10 @@ export const register = (email, password) => {
       return response.json();
     })
     .then((res) => {
-      if (!res.data) {
-        return res;
+      if (200 <= res.status <= 400 ) {
+        return res
       }
-      return res;
+      throw new Error("Bad request")
     })
 };
 

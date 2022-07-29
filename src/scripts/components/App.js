@@ -151,7 +151,8 @@ function App() {
     auth
       .register(email, password)
       .then((res) => {
-        if (res.data) {
+        if (!res.error) {
+          console.log(res);
           setSuccess(true);
           docProps.setValues({
             password: password,
@@ -159,7 +160,9 @@ function App() {
           });
           return docProps.setPopup("signuppopup");
         }
-        return;
+        setSuccess(false);
+        return docProps.setPopup("signuppopup");
+        //return;
       })
       .catch((err) => {
         console.log(err);
