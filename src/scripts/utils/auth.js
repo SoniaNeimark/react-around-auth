@@ -1,5 +1,12 @@
 export const BASE_URL = "https://register.nomoreparties.co";
 
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Error: ${res.status}`);
+}
+
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
@@ -9,18 +16,8 @@ export const register = (email, password) => {
     },
     body: JSON.stringify({ email: email, password: password }),
   })
-    .then((response) => {
-      if (!response) {
-        throw new Error("No response");
-      }
-      return response.json();
-    })
-    .then((res) => {
-      if (200 <= res.status <= 400 ) {
-        return res
-      }
-      throw new Error("Bad request")
-    })
+    .then((response) => checkResponse(response))
+    .then((data) => data);
 };
 
 // auth.js
@@ -34,19 +31,14 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({ email: email, password: password }),
   })
-    .then((response) => {
-      if (response.status >= 400) {
-        return { message: response.status };
-      }
-      return response.json();
-    })
+    .then((response) => checkResponse(response))
     .then((data) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
         return data;
       }
       return;
-    })
+    });
 };
 
 export const getContent = (token) => {
@@ -58,6 +50,6 @@ export const getContent = (token) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then(res => res.json())
-    .then(data => data)
+    .then((res) => checkResponse(res))
+    .then((data) => data);
 };

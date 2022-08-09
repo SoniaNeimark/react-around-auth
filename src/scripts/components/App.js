@@ -11,6 +11,7 @@ import Main from "./markup/Main";
 import paths from "../utils/paths";
 import Login from "./markup/Login";
 import Register from "./markup/Register";
+import ProtectedRoute from "./elements/ProtectedRout";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -152,7 +153,6 @@ function App() {
       .register(email, password)
       .then((res) => {
         if (!res.error) {
-          console.log(res);
           setSuccess(true);
           docProps.setValues({
             password: password,
@@ -284,11 +284,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <DocPropsContext.Provider value={docProps}>
           <div className="page__content">
-            <Routes>
-              <Route
-                path={paths.home}
-                element={
-                  <Header
+          <Header
                     location={location}
                     navigate={navigate}
                     login={paths.login}
@@ -307,8 +303,17 @@ function App() {
                     onOpen={() => setHamburgerClicked(true)}
                     togglePage={togglePage}
                   />
+            <Routes>
+              <Route
+                path={paths.home}
+                element={
+                  <ProtectedRoute
+                  loggedIn={loggedIn}
+                  main={paths.main}
+                  login={paths.login}
+                />
                 }
-              >
+              />
                 <Route
                   path={paths.main}
                   element={
@@ -345,7 +350,7 @@ function App() {
                   }
                 />
                 <Route path={paths.default} element={<h1>Wrong request</h1>} />
-              </Route>
+
             </Routes>
           </div>
         </DocPropsContext.Provider>
