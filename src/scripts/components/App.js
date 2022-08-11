@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import api from "../utils/api";
 import * as auth from "../utils/auth";
-import { CurrentUserContext } from "../contexts/CurrentUserComtext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { DocPropsContext } from "../contexts/DocPropsContext";
 import { useFormAndValidation } from "../hooks/useFormAndValidation";
 import { usePopups } from "../hooks/usePopups";
 import Header from "./markup/Header";
 import Main from "./markup/Main";
+import Footer from "./markup/Footer";
 import paths from "../utils/paths";
 import Login from "./markup/Login";
 import Register from "./markup/Register";
@@ -201,25 +202,9 @@ function App() {
     return setHamburgerClicked(true);
   };
 
-  /** check card's owner */
-  function checkIfOwner(owner) {
-    return owner._id === currentUser._id;
-  }
-
-  /** check if card is liked */
-  function chekIfLiked(card) {
-    if (card.likes.length > 0) {
-      return card.likes.some((owner) => checkIfOwner(owner));
-    }
-    return false;
-  }
-
-  const isLiked = (card) => chekIfLiked(card);
-  const isOwn = (card) => checkIfOwner(card.owner);
-
   /** toggle card's isLiked state */
-  const toggleLike = (card) => {
-    if (!isLiked(card)) {
+  const toggleLike = (card, isLiked) => {
+    if (!isLiked) {
       return api.addLike(card._id);
     } else {
       return api.deleteLike(card._id);
@@ -227,8 +212,8 @@ function App() {
   };
 
   /** handle card's like button */
-  const handleCardLike = (selectedCard) => {
-    toggleLike(selectedCard)
+  const handleCardLike = (selectedCard, isLiked) => {
+    toggleLike(selectedCard, isLiked)
       .then((newCard) => {
         setCards((state) =>
           state.map((currentCard) =>
@@ -284,74 +269,72 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <DocPropsContext.Provider value={docProps}>
           <div className="page__content">
-          <Header
-                    location={location}
-                    navigate={navigate}
-                    login={paths.login}
-                    main={paths.main}
-                    register={paths.register}
-                    signin={paths.login}
-                    loggedIn={loggedIn}
-                    handleLogin={handleLogin}
-                    handleLogout={handleLogout}
-                    toggleHamburgerClicked={toggleHamburgerClicked}
-                    hamburgerClicked={hamburgerClicked}
-                    setHamburgerClicked={setHamburgerClicked}
-                    userMail={userMail}
-                    currentUser={currentUser}
-                    onClose={() => setHamburgerClicked(false)}
-                    onOpen={() => setHamburgerClicked(true)}
-                    togglePage={togglePage}
-                  />
+            <Header
+              location={location}
+              navigate={navigate}
+              login={paths.login}
+              main={paths.main}
+              register={paths.register}
+              signin={paths.login}
+              loggedIn={loggedIn}
+              handleLogin={handleLogin}
+              handleLogout={handleLogout}
+              toggleHamburgerClicked={toggleHamburgerClicked}
+              hamburgerClicked={hamburgerClicked}
+              setHamburgerClicked={setHamburgerClicked}
+              userMail={userMail}
+              currentUser={currentUser}
+              onClose={() => setHamburgerClicked(false)}
+              onOpen={() => setHamburgerClicked(true)}
+              togglePage={togglePage}
+            />
             <Routes>
               <Route
                 path={paths.home}
                 element={
                   <ProtectedRoute
-                  loggedIn={loggedIn}
-                  main={paths.main}
-                  login={paths.login}
-                />
+                    loggedIn={loggedIn}
+                    main={paths.main}
+                    login={paths.login}
+                  />
                 }
               />
-                <Route
-                  path={paths.main}
-                  element={
-                    <Main
-                      setSelectedCard={docProps.setSelectedCard}
-                      cards={cards}
-                      isLiked={isLiked}
-                      isOwn={isOwn}
-                      handleSubmit={handleSubmitProfile}
-                      handleSubmitAdd={handleSubmitAddCard}
-                      handleCardLike={handleCardLike}
-                      handleCardDelete={handleCardDelete}
-                    />
-                  }
-                />
-                <Route
-                  path={paths.login}
-                  element={
-                    <Login
-                      onClick={handleSigninAlertClick}
-                      togglePage={togglePage}
-                      onSubmit={handleSubmitLogin}
-                    />
-                  }
-                />
-                <Route
-                  path={paths.register}
-                  element={
-                    <Register
-                      togglePage={togglePage}
-                      onClick={handleSigninAlertClick}
-                      onSubmit={handleSubmitRegister}
-                    />
-                  }
-                />
-                <Route path={paths.default} element={<h1>Wrong request</h1>} />
-
+              <Route
+                path={paths.main}
+                element={
+                  <Main
+                    setSelectedCard={docProps.setSelectedCard}
+                    cards={cards}
+                    handleSubmit={handleSubmitProfile}
+                    handleSubmitAdd={handleSubmitAddCard}
+                    handleCardLike={handleCardLike}
+                    handleCardDelete={handleCardDelete}
+                  />
+                }
+              />
+              <Route
+                path={paths.login}
+                element={
+                  <Login
+                    onClick={handleSigninAlertClick}
+                    togglePage={togglePage}
+                    onSubmit={handleSubmitLogin}
+                  />
+                }
+              />
+              <Route
+                path={paths.register}
+                element={
+                  <Register
+                    togglePage={togglePage}
+                    onClick={handleSigninAlertClick}
+                    onSubmit={handleSubmitRegister}
+                  />
+                }
+              />
+              <Route path={paths.default} element={<h1>Wrong request</h1>} />
             </Routes>
+            {loggedIn? (<Footer />) : null}
           </div>
         </DocPropsContext.Provider>
       </CurrentUserContext.Provider>

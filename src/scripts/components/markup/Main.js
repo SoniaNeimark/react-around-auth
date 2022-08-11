@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserComtext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { DocPropsContext } from "../../contexts/DocPropsContext";
 import Card from "../elements/Card";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -7,7 +7,6 @@ import EditProfilePopup from "./EditProfilePopup";
 import AddCardPopup from "./AddCardPopup";
 import ImagePopup from "./ImagePopup";
 import AlertPopup from "./AlertPopup";
-import SignInAlertPopup from "./SignInAlertPopup"
 
 const Main = (props) => {
   const currentUser = useContext(CurrentUserContext);
@@ -60,9 +59,7 @@ const Main = (props) => {
               <Card
                 newCard={card}
                 key={card._id}
-                isLiked={props.isLiked(card)}
-                isOwn={props.isOwn(card)}
-                handleCardLike={() => props.handleCardLike(card)}
+                handleCardLike={props.handleCardLike}
                 handleCardDeleteClick={(e) => handleCardClicks(e, card)}
                 handleImageClick={(e) => handleCardClicks(e, card)}
 
@@ -76,7 +73,6 @@ const Main = (props) => {
       <AddCardPopup handleSubmit={props.handleSubmitAdd} buttonText="Create"/>
       <AlertPopup onClick={props.handleCardDelete} />
       <ImagePopup selectedCard={docProps.selectedCard} />
-      <SignInAlertPopup/>
     </main>
   );
 };

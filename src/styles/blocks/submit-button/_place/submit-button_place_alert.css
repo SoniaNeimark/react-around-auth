@@ -1,0 +1,9 @@
+.submit-button_place_alert {
+  width: 236px;
+}
+
+@media screen and (min-width: 624px) {
+  .submit-button_place_alert {
+    width: 358px;
+  }
+}

@@ -16,11 +16,9 @@ export const register = (email, password) => {
     },
     body: JSON.stringify({ email: email, password: password }),
   })
-    .then((response) => checkResponse(response))
+    .then((res) => checkResponse(res))
     .then((data) => data);
 };
-
-// auth.js
 
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
@@ -31,7 +29,7 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({ email: email, password: password }),
   })
-    .then((response) => checkResponse(response))
+    .then((res) => checkResponse(res))
     .then((data) => {
       if (data.token) {
         localStorage.setItem("token", data.token);

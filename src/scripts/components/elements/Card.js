@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const Card = (props) => {
   const newCard = props.newCard;
+  const currentUser = useContext(CurrentUserContext);
+  const isLiked = newCard.likes.some((user) => checkIfOwner(user));
+  const isOwn = checkIfOwner(newCard.owner);
+
+  function checkIfOwner(owner) {
+    return owner._id === currentUser._id;
+  }
+
+  function handleImageClick(evt) {
+    props.handleImageClick(evt);
+  }
 
   return (
     <li id={newCard._id} className="card">
       <img
         name="imagepopup"
         className="card__image hover-opacity"
-        onClick={props.handleImageClick}
+        onClick={handleImageClick}
         src={newCard.link}
         alt={newCard.name}
       />
@@ -17,10 +29,10 @@ const Card = (props) => {
         <div className="card__like-group">
           <button
             className={`card__like-button hover-opacity${
-              props.isLiked ? " card__like-button_active" : ""
+              isLiked ? " card__like-button_active" : ""
             }`}
             type="button"
-            onClick={props.handleCardLike}
+            onClick={() => props.handleCardLike(newCard, isLiked)}
           ></button>
           <p className="card__likes-number">{newCard.likes.length}</p>
         </div>
@@ -28,7 +40,7 @@ const Card = (props) => {
       <button
         name="alertpopup"
         className={`card__delete-button hover-opacity${
-          props.isOwn ? " card__delete-button_visible" : ""
+          isOwn ? " card__delete-button_visible" : ""
         }`}
         type="button"
         onClick={props.handleCardDeleteClick}
@@ -38,5 +50,3 @@ const Card = (props) => {
 };
 
 export default Card;
-
-/*{newCard[likes].length}*/

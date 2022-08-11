@@ -62,10 +62,13 @@
 @import url(./styles/blocks/form/__error/form__error.css);
 @import url(./styles/blocks/form/__error/_visible/form__error_visible.css);
 @import url(./styles/blocks/submit-button/submit-button.css);
+@import url(./styles/blocks/submit-button/_place/submit-button_place_alert.css);
 @import url(./styles/blocks/submit-button/_theme/submit-button_theme_dark.css);
 @import url(./styles/blocks/submit-button/_active/submit-button_active.css);
 @import url(./styles/blocks/submit-button/_active/_theme/submit-button_active_theme_dark.css);
 @import url(./styles/blocks/alert-button/alert-button.css);
 @import url(./styles/blocks/alert-button/_succsess/alert-button_success.css);
 @import url(./styles/blocks/paragraph-text/_place/paragraph-text_place_signin-alert.css);
+@import url(./styles/blocks/footer/footer.css);
+@import url(./styles/blocks/footer/__copyright/footer__copyright.css);
 
