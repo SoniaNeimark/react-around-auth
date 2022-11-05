@@ -26,7 +26,7 @@ const Login = (props) => {
         <InputWithErrorField
           name="password"
           type="password"
-          minLength="4"
+          minLength="8"
           placeholder="Password"
         />
       </Form>

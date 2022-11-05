@@ -16,15 +16,40 @@ import ProtectedRoute from "./elements/ProtectedRout";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userMail, setUserMail] = useState("");
-  const [currentUser, setCurrentUser] = useState({ email: userMail });
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [currentUser, setCurrentUser] = useState({});
   const [success, setSuccess] = useState(false);
   const [cards, setCards] = useState([]);
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
+  const [liked, setLiked] = useState("");
   const navigate = useNavigate();
-  const enableFormAndValidation = useFormAndValidation(currentUser);
+  const enableFormAndValidation = useFormAndValidation();
   const enablePopups = usePopups(currentUser, enableFormAndValidation);
   const location = useLocation();
+  /** toggle card's isLiked state*/
+  const toggleLike = (card, isLiked) => {
+    if (!isLiked) {
+      setLiked(true);
+      return api.addLike(card._id, token);
+    }
+    setLiked(false);
+    return api.deleteLike(card._id, token);
+  };
+
+  /** handle card's like button */
+  const handleCardLike = (selectedCard, isLiked) => {
+    toggleLike(selectedCard, isLiked)
+      .then((newCard) => {
+        selectedCard.likes = newCard.likes;
+        return selectedCard;
+      })
+      .then(() => setLiked(''))
+      .catch((error) => console.log(error.message))
+  };
+
+  function checkIfOwner(owner) {
+    return owner === currentUser._id;
+  }
   const docProps = {
     ...enableFormAndValidation,
     ...enablePopups,
@@ -32,6 +57,8 @@ function App() {
     ...paths,
     success,
     location,
+    handleCardLike,
+    checkIfOwner,
   };
 
   const toggleSignUp = () => {
@@ -40,6 +67,11 @@ function App() {
 
   const togglePage = () => {
     docProps.resetForm();
+    if (loggedIn) {
+      handleLogout();
+      toggleSignUp();
+      return;
+    }
     toggleSignUp();
     return;
   };
@@ -61,10 +93,11 @@ function App() {
   /** set current user data depending on logged in state */
   const setUser = () => {
     if (loggedIn) {
+      const token = localStorage.getItem("token");
       return api
-        .getUserData()
+        .getUserData(token)
         .then((data) => {
-          setCurrentUser({ ...data, ...userMail });
+          setCurrentUser({ ...data });
         })
         .catch((err) => console.log(err));
     }
@@ -74,8 +107,9 @@ function App() {
   /** set cards array */
   const setInitialCards = () => {
     if (loggedIn) {
+      //const token = localStorage.getItem("token");
       return api
-        .getInitialCards()
+        .getInitialCards(token)
         .then((data) => {
           setCards(data);
         })
@@ -84,11 +118,8 @@ function App() {
     return setCards([]);
   };
 
-  const handleLogin = (email) => {
+  const handleLogin = () => {
     setLoggedIn(true);
-    setUserMail(email);
-    setUser();
-    setInitialCards();
     docProps.resetForm();
     return;
   };
@@ -96,6 +127,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
+    return;
   };
 
   /** handle infoTooltip click */
@@ -109,30 +141,35 @@ function App() {
   };
 
   const tokenCheck = () => {
-    const token = localStorage.getItem("token");
     if (token) {
-      return auth
-        .getContent(token)
+      return api
+        .getUserData(token)
         .then((res) => {
-          setUserMail(res.data.email);
-          return res.data.email ? setLoggedIn(true) : setLoggedIn(false);
+          return res.email ? true : false;
         })
         .catch((err) => console.log(err));
     }
-    return setLoggedIn(false);
+    return false;
   };
 
   useEffect(() => {
-    tokenCheck();
+    setLoggedIn(tokenCheck());
   }, []);
 
   /**  set current user and cards on loggedIn state change */
   useEffect(() => {
     if (loggedIn) {
       setUser();
+    }
+    return
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn) {
       setInitialCards();
     }
-  }, [loggedIn, setCurrentUser]);
+    return
+  }, [loggedIn, liked]);
 
   /** handle close popup by "Escape" key */
   useEffect(() => {
@@ -144,6 +181,8 @@ function App() {
     document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
   }, []);
+
+  useEffect(() => setLiked(""), []);
 
   /** handle submit sign-up form */
   function handleSubmitRegister(email, password) {
@@ -163,7 +202,6 @@ function App() {
         }
         setSuccess(false);
         return docProps.setPopup("signuppopup");
-        //return;
       })
       .catch((err) => {
         console.log(err);
@@ -183,7 +221,7 @@ function App() {
       .authorize(email, password)
       .then((data) => {
         if (data.token) {
-          return handleLogin(email);
+          return handleLogin();
         }
         return;
       })
@@ -202,32 +240,11 @@ function App() {
     return setHamburgerClicked(true);
   };
 
-  /** toggle card's isLiked state */
-  const toggleLike = (card, isLiked) => {
-    if (!isLiked) {
-      return api.addLike(card._id);
-    } else {
-      return api.deleteLike(card._id);
-    }
-  };
-
-  /** handle card's like button */
-  const handleCardLike = (selectedCard, isLiked) => {
-    toggleLike(selectedCard, isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((currentCard) =>
-            currentCard._id === selectedCard._id ? newCard : currentCard
-          )
-        );
-      })
-      .catch((error) => console.log(error));
-  };
-
   /** handle card delete */
   function handleCardDelete() {
+    const token = localStorage.getItem("token");
     api
-      .deleteCard(docProps.selectedCard._id)
+      .deleteCard(docProps.selectedCard._id, token)
       .then(() => {
         setCards((state) =>
           state.filter((currentCard) => {
@@ -241,23 +258,29 @@ function App() {
 
   /** handle submit profile data */
   const handleSubmitProfile = (data) => {
+    const token = localStorage.getItem("token");
     return (
-      typeof data === "string" ? api.editAvatar(data) : api.editProfile(data)
+      typeof data === "string"
+        ? api.editAvatar(data, token)
+        : api.editProfile(data, token)
     )
       .then((values) => {
         setCurrentUser(values);
-        docProps.closeAllPopups();
+        setUser();
+        return;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => docProps.closeAllPopups());
   };
 
   /** handle submit add new card */
   const handleSubmitAddCard = (data) => {
+    const token = localStorage.getItem("token");
     return api
-      .addCard(data)
-      .then((value) => updateCards(value))
-      .then(() => docProps.closeAllPopups())
-      .catch((err) => console.log(err));
+      .addCard(data, token)
+      .then((value) => updateCards(value.data))
+      .catch((err) => console.log(err))
+      .finally(() => docProps.closeAllPopups());
   };
 
   function updateCards(value) {
@@ -277,13 +300,11 @@ function App() {
               register={paths.register}
               signin={paths.login}
               loggedIn={loggedIn}
-              handleLogin={handleLogin}
-              handleLogout={handleLogout}
               toggleHamburgerClicked={toggleHamburgerClicked}
               hamburgerClicked={hamburgerClicked}
               setHamburgerClicked={setHamburgerClicked}
-              userMail={userMail}
               currentUser={currentUser}
+              userMail={currentUser.email}
               onClose={() => setHamburgerClicked(false)}
               onOpen={() => setHamburgerClicked(true)}
               togglePage={togglePage}
@@ -296,7 +317,15 @@ function App() {
                     loggedIn={loggedIn}
                     main={paths.main}
                     login={paths.login}
-                  />
+                  >
+                    <Main
+                      setSelectedCard={docProps.setSelectedCard}
+                      cards={cards}
+                      handleSubmit={handleSubmitProfile}
+                      handleSubmitAdd={handleSubmitAddCard}
+                      handleCardDelete={handleCardDelete}
+                    />
+                  </ProtectedRoute>
                 }
               />
               <Route
@@ -307,7 +336,6 @@ function App() {
                     cards={cards}
                     handleSubmit={handleSubmitProfile}
                     handleSubmitAdd={handleSubmitAddCard}
-                    handleCardLike={handleCardLike}
                     handleCardDelete={handleCardDelete}
                   />
                 }
@@ -334,7 +362,7 @@ function App() {
               />
               <Route path={paths.default} element={<h1>Wrong request</h1>} />
             </Routes>
-            {loggedIn? (<Footer />) : null}
+            {loggedIn ? <Footer /> : null}
           </div>
         </DocPropsContext.Provider>
       </CurrentUserContext.Provider>

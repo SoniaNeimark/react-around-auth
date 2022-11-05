@@ -1,8 +1,15 @@
 class Api {
-  constructor(options) {
-    this._options = options;
-    this._baseUrl = this._options.baseUrl;
-    this._headers = this._options.headers;
+  constructor() {
+    this._baseUrl = "https://api.sonia-around.students.nomoredomainssbs.ru";
+    this._headers = {
+      "Content-Type": "application/json",
+    };
+  }
+
+  _setHeaders(token) {
+    const auth = `Bearer ${token}`;
+    this._headers.authorization = auth;
+    return this._headers;
   }
 
   _checkResponse(res) {
@@ -12,27 +19,22 @@ class Api {
     return Promise.reject(`Error: ${res.status}`);
   }
 
-  getUserData() {
+  getUserData(token) {
+    this._setHeaders(token)
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     }).then(this._checkResponse);
   }
 
-  getInitialCards() {
+  getInitialCards(token) {
+    this._setHeaders(token)
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     }).then(this._checkResponse);
   }
 
-  getData() {
-    return Promise.all([this.getUserData(), this.getInitialCards()]).then(
-      (values) => {
-        return values;
-      }
-    );
-  }
-
-  editProfile({ name, about }) {
+  editProfile({ name, about }, token) {
+    this._setHeaders(token)
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -43,7 +45,8 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  editAvatar(url) {
+  editAvatar(url, token) {
+    this._setHeaders(token)
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
@@ -53,7 +56,8 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  addCard(cardObj) {
+  addCard(cardObj, token) {
+    this._setHeaders(token)
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -61,35 +65,30 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  deleteCard(cardId) {
+  deleteCard(cardId, token) {
+    this._setHeaders(token)
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResponse);
   }
 
-  addLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+  addLike(cardId, token) {
+    this._setHeaders(token)
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
     }).then(this._checkResponse);
   }
 
-  deleteLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+  deleteLike(cardId, token) {
+    this._setHeaders(token)
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResponse);
   }
 }
 
-const apiOptions = {
-  baseUrl: "https://around.nomoreparties.co/v1/group-12",
-  headers: {
-    authorization: "8e9e95f1-162a-4424-a2c2-34e39da75ee9",
-    "Content-Type": "application/json",
-  },
-};
-
-const api = new Api(apiOptions);
+const api = new Api();
 export default api;

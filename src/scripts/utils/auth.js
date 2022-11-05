@@ -1,10 +1,11 @@
-export const BASE_URL = "https://register.nomoreparties.co";
+export const BASE_URL = "https://api.sonia-around.students.nomoredomainssbs.ru";
 
 function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Error: ${res.status}`);
+  const error = new Error("authorizationError");
+  return Promise.reject(error + ". Error status: " + res.status);
 }
 
 export const register = (email, password) => {
@@ -20,23 +21,44 @@ export const register = (email, password) => {
     .then((data) => data);
 };
 
-export const authorize = (email, password) => {
-  return fetch(`${BASE_URL}/signin`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email: email, password: password }),
-  })
-    .then((res) => checkResponse(res))
-    .then((data) => {
-      if (data.token) {
+export const authorize1 = (email, password) => {
+  return (
+    fetch(`${BASE_URL}/signin`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, password: password }),
+    })
+      .then((res) => checkResponse(res))
+      .then((data) => {
+        if (!data.token) {
+          const error = new Error("unauthorized");
+          throw error;
+        }
         localStorage.setItem("token", data.token);
         return data;
-      }
-      return;
-    });
+      })
+  );
+};
+export const authorize = (email, password) => {
+return fetch(`${BASE_URL}/signin`, {
+  method: "POST",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ email: email, password: password }),
+})
+  .then((res) => checkResponse(res))
+  .then((data) => {
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      return data;
+    }
+    return;
+  });
 };
 
 export const getContent = (token) => {
@@ -45,7 +67,7 @@ export const getContent = (token) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      authorization: `Bearer ${token}`,
     },
   })
     .then((res) => checkResponse(res))

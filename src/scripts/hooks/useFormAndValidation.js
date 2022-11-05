@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
-export function useFormAndValidation(currentUser) {
-  const [values, setValues] = useState(currentUser ? { ...currentUser } : {});
+export function useFormAndValidation() {
+  const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
@@ -13,12 +13,13 @@ export function useFormAndValidation(currentUser) {
   };
 
   const resetForm = useCallback(
-    (newValues = { ...currentUser }, newErrors = {}, newIsValid = false) => {
+    (newValues = {}, newErrors = {}, newIsValid = false) => {
       setValues(newValues);
       setErrors(newErrors);
       setIsValid(newIsValid);
     },
-    [setValues, setErrors, setIsValid, currentUser]
+    [setValues, setErrors, setIsValid]
+    //setValues, setErrors, setIsValid, currentUser
   );
 
   return {

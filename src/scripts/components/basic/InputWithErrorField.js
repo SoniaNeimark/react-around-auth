@@ -10,7 +10,7 @@ const InputWithErrorField = (props) => {
     ref.current.value = docProps.values[props.name]
       ? docProps.values[props.name]
       : "";
-  }, [docProps.values, props.name]);
+  }, [docProps.values, props.name, docProps.resetForm]);
   return (
     <>
       <input

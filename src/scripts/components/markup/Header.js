@@ -1,5 +1,4 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 //import { useParams } from "react-router-dom"
 
 const Header = (props) => {
@@ -15,7 +14,7 @@ const Header = (props) => {
               </p>
               <p
                 className="paragraph-text paragraph-text_place_header"
-                onClick={props.handleLogout}
+                onClick={props.togglePage}
               >
                 Log out
               </p>
@@ -28,7 +27,7 @@ const Header = (props) => {
           ></div>
 
           {props.loggedIn && !props.hamburgerClicked ? (
-            <ul className="hamburger-menu hover-opacity" onClick={props.onOpen}>
+            <ul className="hamburger-menu hover-opacity" onClick={() => props.setHamburgerClicked(true)}>
               <li className="hamburger-menu__line"></li>
               <li className="hamburger-menu__line"></li>
               <li className="hamburger-menu__line"></li>
@@ -36,7 +35,7 @@ const Header = (props) => {
           ) : props.loggedIn ? (
             <button
               className="close-button close-button_place_header"
-              onClick={props.onClose}
+              onClick={() => props.setHamburgerClicked(false)}
             ></button>
           ) : (
             <p
@@ -59,22 +58,17 @@ const Header = (props) => {
               className={`paragraph-text paragraph-text_place_header${
                 props.loggedIn ? " paragraph-text_hidden_small-screen" : ""
               } hover-opacity`}
-              onClick={() => {
-                props.location.pathname === props.main
-                  ? props.handleLogout()
-                  : props.togglePage();
-              }}
+              onClick={props.togglePage}
             >
-              {props.location.pathname === props.register
-                ? "Sign in"
-                : props.location.pathname === props.signin
-                ? "Sign up"
-                : "Log out"}
+              {props.loggedIn
+              ? "Log out"
+              : props.location.pathname === props.register
+              ? "Sign in"
+              : "Sign up"}
             </p>
           </div>
         </div>
       </header>
-      <Outlet />
     </>
   );
 };

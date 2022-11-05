@@ -11,10 +11,14 @@ import AlertPopup from "./AlertPopup";
 const Main = (props) => {
   const currentUser = useContext(CurrentUserContext);
   const docProps = useContext(DocPropsContext);
+  /*const handleCardLike = (card) => {
+    docProps.setSelectedCard(card);
+    props.handleCardLike();
+  };*/
   const handleCardClicks = (e, card) => {
     docProps.handleOpen(e);
-    docProps.setSelectedCard(card)
-  }
+    docProps.setSelectedCard(card);
+  };
 
   return (
     <main className="main-content">
@@ -33,7 +37,11 @@ const Main = (props) => {
         </div>
         <div className="profile__info-group">
           <div className="profile__name-group">
-            <h1 className="profile__title" name="signinpopup" onClick={docProps.handleOpen}>
+            <h1
+              className="profile__title"
+              name="signinpopup"
+              onClick={docProps.handleOpen}
+            >
               {currentUser ? currentUser.name : "Jaque Coustaux"}
             </h1>
             <button
@@ -56,21 +64,21 @@ const Main = (props) => {
         <ul className="gallery__cards">
           {props.cards.map((card) => {
             return (
+              <li key={card._id} id={card._id} className="card">
               <Card
                 newCard={card}
-                key={card._id}
-                handleCardLike={props.handleCardLike}
+                //handleCardLike={() => handleCardLike(card)}
                 handleCardDeleteClick={(e) => handleCardClicks(e, card)}
                 handleImageClick={(e) => handleCardClicks(e, card)}
-
               />
+              </li>
             );
           })}
         </ul>
       </section>
       <EditAvatarPopup handleSubmit={props.handleSubmit} />
       <EditProfilePopup handleSubmit={props.handleSubmit} />
-      <AddCardPopup handleSubmit={props.handleSubmitAdd} buttonText="Create"/>
+      <AddCardPopup handleSubmit={props.handleSubmitAdd} buttonText="Create" />
       <AlertPopup onClick={props.handleCardDelete} />
       <ImagePopup selectedCard={docProps.selectedCard} />
     </main>
