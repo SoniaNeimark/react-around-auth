@@ -120,7 +120,7 @@ function App() {
   /** set cards array */
   const setInitialCards = () => {
     if (loggedIn) {
-      //const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       return api
         .getInitialCards(token)
         .then((data) => {
