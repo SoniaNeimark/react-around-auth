@@ -17,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* name.ark@sonia-around.students.nomoredomainssbs.ru:/home/name.ark/frontend"
+    "deploy": "npm run build && scp -r ./build/* name.ark@sonia-around.students.nomoredomainssbs.ru:/home/name.ark/react-around-api-full/frontend"
   },
   "eslintConfig": {
     "extends": [
