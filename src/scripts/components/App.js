@@ -29,21 +29,34 @@ function App() {
   /** toggle card's isLiked state*/
   const toggleLike = (card, isLiked) => {
     if (!isLiked) {
-      setLiked(true);
+      //setLiked(true);
       return api.addLike(card._id, token);
     }
-    setLiked(false);
+    //setLiked(false);
     return api.deleteLike(card._id, token);
   };
 
   /** handle card's like button */
-  const handleCardLike = (selectedCard, isLiked) => {
+  /*const handleCardLike = (selectedCard, isLiked) => {
     toggleLike(selectedCard, isLiked)
       .then((newCard) => {
         selectedCard.likes = newCard.likes;
         return selectedCard;
       })
       .then(() => setLiked(''))
+      .catch((error) => console.log(error.message))
+  };*/
+
+  const handleCardLike = (selectedCard, isLiked) => {
+    toggleLike(selectedCard, isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+        state.map((currentCard) =>
+          currentCard._id === selectedCard._id ? newCard : currentCard
+        )
+      );
+      })
+      //.then(() => setLiked(''))
       .catch((error) => console.log(error.message))
   };
 
@@ -169,7 +182,7 @@ function App() {
       setInitialCards();
     }
     return
-  }, [loggedIn, liked]);
+  }, [loggedIn]);
 
   /** handle close popup by "Escape" key */
   useEffect(() => {
@@ -182,7 +195,7 @@ function App() {
     return () => document.removeEventListener("keydown", closeByEscape);
   }, []);
 
-  useEffect(() => setLiked(""), []);
+  //useEffect(() => setLiked(""), []);
 
   /** handle submit sign-up form */
   function handleSubmitRegister(email, password) {
