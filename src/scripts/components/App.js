@@ -108,7 +108,7 @@ function App() {
       return api
         .getInitialCards(token)
         .then((data) => {
-          setCards(data);
+          setCards(data.reverse());
         })
         .catch((err) => console.log(err));
     }

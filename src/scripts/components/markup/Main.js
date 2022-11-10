@@ -58,7 +58,7 @@ const Main = (props) => {
       </section>
       <section className="gallery">
         <ul className="gallery__cards">
-          {props.cards.reverse().map((card) => {
+          {props.cards.map((card) => {
             return (
               <li key={card._id} id={card._id} className="card">
                 <Card
