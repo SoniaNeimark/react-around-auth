@@ -12,7 +12,6 @@ const PopupWithForm = (props) => {
             e.preventDefault();
             props.onSubmit();
           }}
-          //onChange={props.onChange}
           buttonText={props.buttonText}
           title={props.title}
           onButtonClick={props.onButtonClick}

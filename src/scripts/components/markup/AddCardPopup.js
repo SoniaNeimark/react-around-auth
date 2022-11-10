@@ -9,7 +9,7 @@ const AddCardPopup = (props) => {
     <PopupWithForm
       name="add"
       title="New place"
-      buttonText={props.buttonText}//"Create"
+      buttonText={props.buttonText}
       onSubmit={() => {
         props.handleSubmit({ name: docProps.values["title"], link: docProps.values["link"] });
       }}

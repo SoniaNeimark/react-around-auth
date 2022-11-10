@@ -21,7 +21,6 @@ function App() {
   const [success, setSuccess] = useState(false);
   const [cards, setCards] = useState([]);
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
-  const [liked, setLiked] = useState("");
   const navigate = useNavigate();
   const enableFormAndValidation = useFormAndValidation();
   const enablePopups = usePopups(currentUser, enableFormAndValidation);
@@ -29,35 +28,20 @@ function App() {
   /** toggle card's isLiked state*/
   const toggleLike = (card, isLiked) => {
     if (!isLiked) {
-      //setLiked(true);
       return api.addLike(card._id, token);
     }
-    //setLiked(false);
     return api.deleteLike(card._id, token);
   };
 
   /** handle card's like button */
-  /*const handleCardLike = (selectedCard, isLiked) => {
+  const handleCardLike = (selectedCard, isLiked) => {
     toggleLike(selectedCard, isLiked)
       .then((newCard) => {
         selectedCard.likes = newCard.likes;
         return selectedCard;
       })
-      .then(() => setLiked(''))
       .catch((error) => console.log(error.message))
-  };*/
-
-  const handleCardLike = (selectedCard, isLiked) => {
-    toggleLike(selectedCard, isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-        state.map((currentCard) =>
-          currentCard._id === selectedCard._id ? newCard : currentCard
-        )
-      );
-      })
-      //.then(() => setLiked(''))
-      .catch((error) => console.log(error.message))
+      .finally(() => setInitialCards())
   };
 
   function checkIfOwner(owner) {
@@ -132,6 +116,7 @@ function App() {
   };
 
   const handleLogin = () => {
+    setToken(localStorage.getItem("token"))
     setLoggedIn(true);
     docProps.resetForm();
     return;
@@ -194,8 +179,6 @@ function App() {
     document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
   }, []);
-
-  //useEffect(() => setLiked(""), []);
 
   /** handle submit sign-up form */
   function handleSubmitRegister(email, password) {

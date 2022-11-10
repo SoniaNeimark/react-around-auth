@@ -11,10 +11,6 @@ import AlertPopup from "./AlertPopup";
 const Main = (props) => {
   const currentUser = useContext(CurrentUserContext);
   const docProps = useContext(DocPropsContext);
-  /*const handleCardLike = (card) => {
-    docProps.setSelectedCard(card);
-    props.handleCardLike();
-  };*/
   const handleCardClicks = (e, card) => {
     docProps.handleOpen(e);
     docProps.setSelectedCard(card);
@@ -62,15 +58,14 @@ const Main = (props) => {
       </section>
       <section className="gallery">
         <ul className="gallery__cards">
-          {props.cards.map((card) => {
+          {props.cards.reverse().map((card) => {
             return (
               <li key={card._id} id={card._id} className="card">
-              <Card
-                newCard={card}
-                //handleCardLike={() => handleCardLike(card)}
-                handleCardDeleteClick={(e) => handleCardClicks(e, card)}
-                handleImageClick={(e) => handleCardClicks(e, card)}
-              />
+                <Card
+                  newCard={card}
+                  handleCardDeleteClick={(e) => handleCardClicks(e, card)}
+                  handleImageClick={(e) => handleCardClicks(e, card)}
+                />
               </li>
             );
           })}

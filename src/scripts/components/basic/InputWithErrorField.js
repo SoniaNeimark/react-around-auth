@@ -4,7 +4,6 @@ import { DocPropsContext } from "../../contexts/DocPropsContext";
 const InputWithErrorField = (props) => {
   const docProps = useContext(DocPropsContext);
   const ref = useRef("");
-  //const dark = props["dark"]
 
   React.useEffect(() => {
     ref.current.value = docProps.values[props.name]

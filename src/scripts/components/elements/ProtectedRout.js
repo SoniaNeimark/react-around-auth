@@ -7,17 +7,4 @@ function ProtectedRoute(loggedIn, main, login, children) {
     </Navigate>
 }
 
-/*const ProtectedRoute = ({ loggedIn, main, login, children }) => {
-  if (!loggedIn) {
-    return <Navigate to={login} replace />;
-  }
-
-  /*if (!children) {
-    return <Navigate to={main} replace />;
-  }*/
-
-  /*return <Navigate to={main}>{children}</Navigate>;
-};*/
-
-
 export default ProtectedRoute;
