@@ -1,4 +1,4 @@
-export const BASE_URL = "https://api.sonia-around.students.nomoredomainssbs.ru";
+export const BASE_URL = "https://news-explorer-api-avm7.vercel.app";
 
 function checkResponse(res) {
   if (res.ok) {

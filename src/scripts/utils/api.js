@@ -1,6 +1,6 @@
 class Api {
   constructor() {
-    this._baseUrl = "https://api.sonia-around.students.nomoredomainssbs.ru";
+    this._baseUrl = "https://news-explorer-api-avm7.vercel.app";
     this._headers = {
       "Content-Type": "application/json",
     };
